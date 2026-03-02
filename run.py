@@ -39,11 +39,18 @@ import numpy as np
 
 from gspread_formatting import *
 # gspread-formatting is a library that allows you to apply formatting to Google Sheets using gspread.
+from pyfiglet import figlet_format
+# pyfiglet is a fun library that creates ASCII art text. 
+# I use it to print a cool title when the program starts.
 
 
-# ==============================
-# USER INPUT
-# ==============================
+
+print(figlet_format("Real Estate App"))
+print("Real Estate Analysis App")
+print("--------------------------------\n")
+# The code above prints a stylized title for the app using pyfiglet, 
+# followed by a simple description and a separator line.
+
 
 country_input = input("Enter the country (only Kazakhstan is available): ").strip().lower()
 
@@ -53,12 +60,12 @@ rooms_input = input("Number of rooms desired (e.g., 2): ").strip()
 
 location_input = input("Preferred district or location (optional): ").strip()
 
-price_input = input("Enter your maximum budget (0–500000000): ").strip()
+price_input = input("Enter your maximum budget (0-500000000): ").strip()
 
+# The code above collects user input for country, city, number of rooms, preferred location, 
+# and maximum budget.
 
-# ==============================
-# VALIDATION
-# ==============================
+ 
 """
 Validate supported country and city.
 Program exits if unsupported values are entered.
@@ -526,9 +533,7 @@ df[[
 # Sends your DataFrame to Google Sheets.
 # .values.tolist() converts the DataFrame into a format Google Sheets understands.
 
-# ==============================
-# GOOGLE SHEETS FORMATTING
-# ==============================
+
 
 """
 Format Google Sheets output for better readability.
@@ -563,7 +568,7 @@ set_frozen(
 )
 
 
-# Highlight TOP 3 investment listings green
+# Highlight top 3 investment listings green
 
 green_format = CellFormat(
     backgroundColor=Color(0.85,1,0.85)
@@ -599,7 +604,8 @@ TOP LISTINGS:
    including header, location, price, size,
    price per square meter, and link.
 """
-# PRINT SUMMARY
+# print market summary statistics such as average price, average size, and average price
+# per square meter.
 
 avg_price = df["price_clean"].mean()
 avg_sqm = df["sqm"].mean()
@@ -612,7 +618,7 @@ print(f"Average size: {avg_sqm:.1f} m²")
 print(f"Average price per m²: {avg_price_m2:,.0f} ₸")
 
 
-# PRINT TOP 5
+# print the top investment options based on the highest investment scores.
 
 print("\n🔥 TOP INVESTMENT OPTIONS 🔥\n")
 
