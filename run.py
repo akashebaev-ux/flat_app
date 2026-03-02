@@ -18,15 +18,15 @@ from datetime import datetime
 # Selenium waiting tools.
 # Used to wait for webpage elements to load before scraping.
 # Improves scraper reliability.
- 
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
- 
-# Selenium is a powerful tool for web scraping and browser automation. 
-# In this project, Selenium is used to navigate to the real estate listing website.
+
+# Selenium is a powerful tool for web scraping and browser automation.
+# Selenium is used to navigate to the real estate listing website.
 
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -41,25 +41,24 @@ import sys
 import pandas as pd
 import numpy as np
 
-# Pandas helps me organize and analyze my scraped data easier. 
+# Pandas helps me organize and analyze my scraped data easier.
 # In my project, pandas turns raw Selenium data into a clean table.
 
-from gspread_formatting import *
-# gspread-formatting is a library that allows you to apply formatting to Google Sheets using gspread.
+from gspread_formatting import (
+    CellFormat, TextFormat, Color, format_cell_range, set_frozen
+)
+# gspread-formatting is a library that allows you to apply formatting
+# to Google Sheets using gspread.
 from pyfiglet import figlet_format
-# pyfiglet is a fun library that creates ASCII art text. 
+# pyfiglet is a fun library that creates ASCII art text.
 # I use it to print a cool title when the program starts.
 
 
-
-
 # CONSTANTS
-
 CITY_SLUG = "almaty"
-
 MAX_PAGES = 10
 
-# max_pages is set to 10 to limit the number of pages scraped for testing purposes.
+# max_pages is set to 10 to limit the number of pages scraped.
 
 CENTER_KEYWORDS = [
     "Самал",
@@ -71,13 +70,12 @@ CENTER_KEYWORDS = [
     ]
 
 
-
-
 def start_driver():
-    """Attempt to start a Selenium WebDriver for Chrome, Firefox, Edge, or Safari.
+    """To start a Selenium WebDriver for Chrome, Firefox, Edge, or Safari.
      Tries each browser in order and returns the first one that works.
-     If no browsers are available, prints an error message and exits the program."""
-    
+     If no browsers are available, prints an error message and
+     exits the program."""
+
     try:
         print("Starting Chrome browser...")
 
@@ -86,7 +84,8 @@ def start_driver():
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
-    # These options help Chrome run in headless mode and avoid common issues in different environments.
+    # These options help Chrome run in headless mode and avoid common
+    # issues in different environments.
 
         return webdriver.Chrome(
             service=ChromeService(
@@ -131,8 +130,6 @@ def start_driver():
     sys.exit()
 
 
-
-
 def get_user_input():
     """
 Collect user input for real estate search criteria.
@@ -140,12 +137,16 @@ Collect user input for real estate search criteria.
     print(figlet_format("Real Estate App"))
     print("Real Estate Analysis App")
     print("--------------------------------\n")
-    # The code above prints a stylized title for the app using pyfiglet, 
+    # The code above prints a stylized title for the app using pyfiglet,
     # followed by a simple description and a separator line.
 
-    country = input("Enter the country (only Kazakhstan is available): \n").strip().lower()
+    country = input(
+        "Enter the country (only Kazakhstan is available):\n"
+    ).strip().lower()
 
-    city = input("Enter the city (only Almaty is available): \n").strip().lower()
+    city = input(
+        "Enter the city (only Almaty is available):\n"
+    ).strip().lower()
 
     rooms = input("Number of rooms desired (e.g., 2): \n").strip()
 
@@ -153,11 +154,10 @@ Collect user input for real estate search criteria.
 
     price = input("Enter your maximum budget (0-500000000): \n").strip()
 
-    # The code above collects user input for country, city, number of rooms, preferred location, 
-    # and maximum budget.
-    return country, city, rooms, location, price
- 
+    # The code above collects user input for country, city, number of rooms,
+    # preferred location, and maximum budget.
 
+    return country, city, rooms, location, price
 
 
 def validate_location(country, city):
@@ -173,30 +173,29 @@ def validate_location(country, city):
         print("Currently only Almaty supported.")
         exit()
 
- 
 
- 
 def parse_price(price_input):
-    """Parse and validate price input. Returns an integer or default value if invalid.
-    This function attempts to convert the user's price input into an integer.
-    If the input is invalid (non-numeric, negative, or zero), it defaults to 500 million. 
-    This ensures the program can continue running even if the user enters incorrect data.
-    """ 
-    # Budget conversion 
+    """Parse and validate price input. Returns an integer or default value
+    if invalid.This function attempts to convert the user's price input into
+    an integer.If the input is invalid (non-numeric, negative, or zero),
+    it defaults to 500 million. This ensures the program can continue running
+    even if the user enters incorrect data.
+    """
+# Budget conversion
     try:
         max_price = int(price_input)
-    except:
-        max_price = 500000000 # Default to 500 million if input is invalid
+    except Exception:
+        max_price = 500000000  # Default to 500 million if input is invalid
 
     if max_price <= 0:
-        max_price = 500000000 # Default to 500 million if input is zero or negative
+        max_price = 500000000  # Default to 500 million if input is zero or
+        # negative
     return max_price
 
 
-
-
 def setup_google_sheets():
-    """Set up Google Sheets connection using gspread and service account credentials.
+    """Set up Google Sheets connection using gspread and service
+    account credentials.
     Returns the authorized gspread client and the opened sheet."""
 
     SCOPE = [
@@ -226,54 +225,53 @@ def setup_google_sheets():
     return ws
 
 
-
-
 def scrape_data(rooms_input):
     """Scrape real estate data from krisha.kz using Selenium WebDriver.
 Returns a list of scraped data for further processing."""
 
-    driver = start_driver() 
-    
-    # Start the Selenium WebDriver to open the browser and navigate to 
-    #the real estate website.
+    driver = start_driver()
+
+    # Start the Selenium WebDriver to open the browser and navigate to
+    # the real estate website.
     all_data = []
-    
+
     page = 1
 
     try:
-        while page<=MAX_PAGES:
+        while page <= MAX_PAGES:
 
-        # Iterate through Krisha.kz apartment listing pages and collect card data.
+            # Iterate through Krisha.kz apartment listing pages and collect
+            # card data.
 
-        # For each page:
-           # - Open the page using Selenium
-           # - Find all elements with class 'a-card'
-           # - Extract header, price, location, link, and full card text
-           # - Store extracted data in all_data list
+            # For each page:
+            # - Open the page using Selenium
+            # - Find all elements with class 'a-card'
+            # - Extract header, price, location, link, and full card text
+            # - Store extracted data in all_data list
 
-        # The loop continues until MAX_PAGES is reached.
+            # The loop continues until MAX_PAGES is reached.
 
-        # Notes
-       # 
-       # Cards missing required elements are skipped.
-    
+            # Notes
+            # Cards missing required elements are skipped.
 
             if rooms_input:
 
-                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?das[live.rooms]={rooms_input}&page={page}"
+                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
+                f"?das[live.rooms]={rooms_input}&page={page}"
 
             else:
-                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?page={page}"
+                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
+                f"?page={page}"
 
             driver.get(url)
 
-            print("Page",page)
+            print("Page", page)
 
             try:
 
-                WebDriverWait(driver,10).until(
+                WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located(
-                        (By.CLASS_NAME,"a-card")
+                        (By.CLASS_NAME, "a-card")
                     )
                 )
 
@@ -282,24 +280,33 @@ Returns a list of scraped data for further processing."""
                 print("No more pages.")
                 break
 
-    # The website krisha.kz is a popular real estate listing site in Kazakhstan, 
-    # where users can find apartments for sale in Almaty. The script opens this
-    # website using Selenium WebDriver to prepare for data extraction. This website doesn't
-    # have blockers and is accessible for scraping, making it a suitable choice for 
-    # collecting real estate data.
+    # The website krisha.kz is the popular real estate listing
+    # website in Kazakhstan,where users can find apartments for sale in Almaty.
+    # The script opens this website using Selenium WebDriver to prepare for
+    # data extraction. This website doesn't have blockers and is accessible
+    # for scraping, making it a suitable choice for collecting real estate
+    # data.
 
-            cards = driver.find_elements(By.CLASS_NAME,"a-card")
-        
+            cards = driver.find_elements(By.CLASS_NAME, "a-card")
+
             for card in cards:
-                
+
                 try:
 
-                    header=card.find_element(By.CLASS_NAME,"a-card__header").text
-                    price=card.find_element(By.CLASS_NAME,"a-card__price").text
-                    location=card.find_element(By.CLASS_NAME,"a-card__subtitle").text
-                    link=card.find_element(By.TAG_NAME,"a").get_attribute("href")
+                    header = card.find_element(
+                        By.CLASS_NAME, "a-card__header"
+                    ).text
+                    price = card.find_element(
+                        By.CLASS_NAME, "a-card__price"
+                    ).text
+                    location = card.find_element(
+                        By.CLASS_NAME, "a-card__subtitle"
+                    ).text
+                    link = card.find_element(
+                        By.TAG_NAME, "a"
+                    ).get_attribute("href")
 
-                    combined_text=card.text
+                    combined_text = card.text
 
                     all_data.append([
                         header,
@@ -311,15 +318,13 @@ Returns a list of scraped data for further processing."""
 
                 except Exception as e:
 
-                    print("Skipping a card due to missing data:",e)
+                    print("Skipping a card due to missing data:", e)
                     continue
-            page+=1
+            page += 1
     finally:
         driver.quit()
-        #Close browser properly after scraping to free up system resources.
+        # Close browser properly after scraping to free up system resources.
     return all_data
-
-
 
 
 def clean_data(all_data, rooms_input, location_input, max_price):
@@ -334,24 +339,19 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     - combined_text
     """
     df = pd.DataFrame(
-    all_data,
-    columns=[
-    "header",
-    "price",
-    "location",
-    "link",
-    "combined_text"
-    ]
+        all_data,
+        columns=["header", "price", "location", "link", "combined_text"]
     )
 
-    # Check if DataFrame is empty after scraping. If no listings were found, print a message and exit.
+    # It checks if DataFrame is empty after scraping.
+    # If no listings were found, print a message and exit.
     if df.empty:
 
         print("No listings found.")
         exit()
 
-    
-    # The code belowe: extract the number of rooms from the flat header and convert it to numeric format.
+    # The code belowe: extract the number of rooms from the flat header
+    # and convert it to numeric format.
 
     df["rooms"] = df["header"].str.extract(
         r"(\d+)\s*[- ]?\s*ком"
@@ -368,7 +368,8 @@ def clean_data(all_data, rooms_input, location_input, max_price):
         errors="coerce"
     )
 
-    # errors="coerce" converts non-numeric values to NaN, which is useful for filtering later.
+    # errors="coerce" converts non-numeric values to NaN, which is useful
+    # for filtering later.
 
     if rooms_input:
 
@@ -376,7 +377,6 @@ def clean_data(all_data, rooms_input, location_input, max_price):
             df["rooms"] == int(rooms_input)
         ]
 
-    
     # The code below removes duplicate flat listings based on the link column.
     # Ensures each property appears only once in the dataset.
 
@@ -384,64 +384,64 @@ def clean_data(all_data, rooms_input, location_input, max_price):
 
     # Filter listings by preferred location.
 
-    #If the user specifies a district or area, this code
+    # If the user specifies a district or area, this code
     # keeps only listings where the 'location' column
     # contains the entered text.
 
     # The comparison is case-insensitive and ignores
     # missing values.
-    
+
     if location_input:
 
         df = df[
             df["location"].str.lower().str.contains(
-            location_input.lower(),
-            na=False
+                location_input.lower(),
+                na=False
             )
         ]
-    #Clean and convert price data.
+    # Clean and convert price data.
 
     # This code:
-    # 1. Removes all non-numeric characters from the 'price' column using a regular expression.
+    # 1. Removes all non-numeric characters from the 'price' column using
+    # a regular expression.
     # 2. Stores the cleaned values in a new column called 'price_clean'.
     # 3. Converts the cleaned prices into numeric format.
     # 4. Invalid or missing values are converted to NaN.
-    
-    df["price_clean"] = df["price"].str.replace(
-    r"[^\d]",
-    "",
 
-    # [] - Matches any character in the set
-    # ^ inside brackets = NOT
-    # \d = any digit (0-9)
-    # [^\d] - Matches any character that is NOT a digit (0-9)
-    regex=True
+    df["price_clean"] = df["price"].str.replace(
+        r"[^\d]",
+        "",
+
+        # [] - Matches any character in the set
+        # ^ inside brackets = NOT
+        # \d = any digit (0-9)
+        # [^\d] - Matches any character that is NOT a digit (0-9)
+        regex=True
     )
 
     df["price_clean"] = pd.to_numeric(
-    df["price_clean"],
-    errors="coerce"
+        df["price_clean"],
+        errors="coerce"
     )
 
-
     df = df[
-    df["price_clean"] <= max_price
+        df["price_clean"] <= max_price
     ]
-    # Filter out listings that exceed the user's maximum budget to focus on 
+    # Filter out listings that exceed the user's maximum budget to focus on
     # relevant properties.
-    
-   # Extract and convert apartment size in square meters.
 
-   # This code:
-   # 1. Searches the 'combined_text' column for apartment sizes
-   # like "45 m²" or "60м²".
-   # 2. Extracts the numeric size value using a regular expression.
-   # 3. Stores the result in a new column called 'sqm'.
-   # 4. Converts the extracted values into numeric format.
-   # 5. Invalid or missing values are converted to NaN.
+    # Extract and convert apartment size in square meters.
+
+    # This code:
+    # 1. Searches the 'combined_text' column for apartment sizes
+    # like "45 m²" or "60м²".
+    # 2. Extracts the numeric size value using a regular expression.
+    # 3. Stores the result in a new column called 'sqm'.
+    # 4. Converts the extracted values into numeric format.
+    # 5. Invalid or missing values are converted to NaN.
 
     df["sqm"] = df["combined_text"].str.extract(
-    r"(\d+\.?\d*)\s?[mм]²"
+        r"(\d+\.?\d*)\s?[mм]²"
     )
 
     # \d+ - One or more digits (e.g., 45, 60)
@@ -452,8 +452,8 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # ² - square meters symbol
 
     df["sqm"] = pd.to_numeric(
-    df["sqm"],
-    errors="coerce"
+        df["sqm"],
+        errors="coerce"
     )
 
     # Calculate price per square meter.
@@ -461,19 +461,19 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # This code divides the cleaned apartment price by the
     # apartment size in square meters and stores the result
     # in the 'price_per_m2' column.
-    
-    df=df[df["sqm"]>0]
+
+    df = df[df["sqm"] > 0]
     # Filter out listings with zero or negative size to avoid division errors.
 
     df["price_per_m2"] = (
-    df["price_clean"]/df["sqm"]
+        df["price_clean"]/df["sqm"]
     )
 
     # Filter unrealistic listings.
 
     # Keep only apartments where the price per square meter
     # is greater than 100000 to remove incorrect or invalid data.
-    
+
     df = df[df["price_per_m2"] > 100000]
 
     # Remove price per square meter outliers using the IQR method.
@@ -485,7 +485,7 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # 3. Filters out values outside the range:
     # Q1 - 1.5 * IQR to Q3 + 1.5 * IQR.
     # 4. Keeps only listings within the normal price range.
-    
+
     Q1 = df["price_per_m2"].quantile(0.25)
 
     # Finds the 25% percentile
@@ -499,16 +499,15 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     IQR = Q3-Q1
 
     df = df[
-    (df["price_per_m2"]>=Q1-1.5*IQR) &
-    (df["price_per_m2"]<=Q3+1.5*IQR)
+        (df["price_per_m2"] >= Q1-1.5*IQR) &
+        (df["price_per_m2"] <= Q3+1.5*IQR)
     ]
     # Remove apartments with extremely low or extremely high price per m².
     # This helps to focus on realistic listings and improve analysis accuracy.
 
-
     # Calculate investment scores based on price per square meter.
 
-   # This code:
+    # This code:
     # 1. Calculates the mean and standard deviation of price_per_m2.
     # 2. Computes a z-score to measure how each listing compares
     # to the average price per square meter.
@@ -516,7 +515,7 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # receive higher scores.
     # 4. Creates a liquidity score based on relative price per m²,
     # where lower prices result in higher liquidity scores.
-    
+
     mean = df["price_per_m2"].mean()
     # The mean (average) price per square meter across all listings.
 
@@ -524,73 +523,77 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # Standard deviation = average distance from the mean
 
     if std and not np.isnan(std):
-        df["z_score"]=(df["price_per_m2"]-mean)/std
-    # Z-score is a number that shows how far a value is 
+        df["z_score"] = (df["price_per_m2"]-mean)/std
+
+    # Z-score is a number that shows how far a value is
     # from the mean (average), measured in standard deviations.
     else:
-        df["z_score"]=0
+        df["z_score"] = 0
 
-    df["undervaluation_score"]=-df["z_score"]
+    df["undervaluation_score"] = - df["z_score"]
 
-    max_m2=df["price_per_m2"].max()
+    max_m2 = df["price_per_m2"].max()
 
     # safe liquidity score calculation that avoids division by zero
     if max_m2 and not np.isnan(max_m2):
-        df["liquidity_score"]=(max_m2-df["price_per_m2"])/max_m2
+        df["liquidity_score"] = (max_m2-df["price_per_m2"])/max_m2
     else:
-        df["liquidity_score"]=0
-    # Liquidity score is higher for cheaper properties, indicating they may sell faster.
-    
+        df["liquidity_score"] = 0
+    # Liquidity score is higher for cheaper properties, indicating they
+    # may sell faster.
+
     # Calculate location-based and investment scores.
 
     # This section:
 
     # CENTER SCORE:
-   # 1. Defines keywords representing central districts.
-   # 2. Checks whether each listing location contains one of the center keywords.
+    # 1. Defines keywords representing central districts.
+    # 2. Checks whether each listing location contains one of the
+    # center keywords.
     # 3. Assigns a center_score:
-    #- 1 = central location
-    #- 0 = non-central location
+    # - 1 = central location
+    # - 0 = non-central location
 
     df["center_score"] = df["location"].apply(
-    lambda x: any(
-    k.lower() in x.lower()
-    for k in CENTER_KEYWORDS
-    )
+        lambda x: any(
+            k.lower() in x.lower()
+            for k in CENTER_KEYWORDS
+        )
     ).astype(int)
 
     # INVESTMENT SCORE:
-    #Combines multiple factors into a single score:
-    #- undervaluation_score (cheaper properties score higher)
-    #- liquidity_score (more affordable properties score higher)
-    #- center_score (central locations score higher)
+    # Combines multiple factors into a single score:
+    # - undervaluation_score (cheaper properties score higher)
+    # - liquidity_score (more affordable properties score higher)
+    # - center_score (central locations score higher)
 
-    #Higher investment_score indicates a potentially
-    #better investment opportunity.
-    
+    # Higher investment_score indicates a potentially
+    # better investment opportunity.
+
     df["investment_score"] = (
 
-    df["undervaluation_score"]
-    +
-    df["liquidity_score"]
-    +
-    3*df["center_score"] # Center location is weighted more heavily in the investment score.
+        df["undervaluation_score"]
+        +
+        df["liquidity_score"]
+        +
+        3*df["center_score"]
+        # Center location is weighted more heavily in the investment score.
 
     )
 
-    df=df.fillna(0)
-    # Replace any remaining NaN values with 0 to ensure all listings have valid scores.
+    df = df.fillna(0)
+    # Replace any remaining NaN values with 0 to ensure all listings
+    # have valid scores.
     # Replace missing values and show the best investments first.
 
-    df=df.sort_values(
-    by="investment_score",
-    ascending=False
+    df = df.sort_values(
+        by="investment_score",
+        ascending=False
     )
-    # Sort listings by investment score in descending order, so the best investment
+    # Sort listings by investment score in descending order, so
+    # the best investment
     #  opportunities appear at the top of the DataFrame.
     return df
-
-
 
 
 def save_to_sheets(df, ws):
@@ -609,26 +612,25 @@ def save_to_sheets(df, ws):
     # Removes old data.
 
     ws.append_row([
-        "header","price","location","link",
-        "sqm","price_per_m2",
-        "z_score","liquidity_score",
-        "center_score","investment_score"
+        "header", "price", "location", "link",
+        "sqm", "price_per_m2",
+        "z_score", "liquidity_score",
+        "center_score", "investment_score"
     ])
     # Creates table headers.
 
     ws.append_rows(
         df[[
-            "header","price","location","link",
-            "sqm","price_per_m2",
-            "z_score","liquidity_score",
-            "center_score","investment_score"
+            "header", "price", "location", "link",
+            "sqm", "price_per_m2",
+            "z_score", "liquidity_score",
+            "center_score", "investment_score"
         ]].values.tolist()
     )
 
 # Sends your DataFrame to Google Sheets.
-# .values.tolist() converts the DataFrame into a format Google Sheets understands.
-
-
+# .values.tolist() converts the DataFrame into a format
+# Google Sheets understands.
 
 
 def print_results(df, ws):
@@ -646,9 +648,8 @@ def print_results(df, ws):
     This improves the visual presentation of the results
     in Google Sheets."""
 
-    
     header_format = CellFormat(
-        textFormat=TextFormat(bold=True)# Make header bold
+        textFormat=TextFormat(bold=True)  # Make header bold
     )
 
     format_cell_range(
@@ -657,21 +658,19 @@ def print_results(df, ws):
         header_format
     )
 
-
     # Freeze header row
     set_frozen(
         ws,
         rows=1
     )
 
-
     # Highlight top 3 investment listings green
 
     green_format = CellFormat(
-        backgroundColor=Color(0.85,1,0.85)
+        backgroundColor=Color(0.85, 1, 0.85)
     )
 
-    TOP_N = min(3,len(df))
+    TOP_N = min(3, len(df))
 
     for i in range(TOP_N):
 
@@ -683,23 +682,23 @@ def print_results(df, ws):
             green_format
         )
 
-    
-    #Display market statistics and top investment listings.
+    # Display market statistics and top investment listings.
 
     # This section:
 
-    #MARKET SUMMARY:
-    #1. Calculates average price, average apartment size,
-    #and average price per square meter.
-    #2. Prints a summary of the real estate market.
+    # MARKET SUMMARY:
+    # 1. Calculates average price, average apartment size,
+    # and average price per square meter.
+    # 2. Prints a summary of the real estate market.
 
-    #TOP LISTINGS:
-    #3. Selects the top investment opportunities.
-    #4. Prints detailed information for up to 5 listings,
-    #including header, location, price, size,
-    #price per square meter, and link.
+    # TOP LISTINGS:
+    # 3. Selects the top investment opportunities.
+    # 4. Prints detailed information for up to 5 listings,
+    # including header, location, price, size,
+    # price per square meter, and link.
 
-    # print market summary statistics such as average price, average size, and average price
+    # print market summary statistics such as average price, average size,
+    # and average price
     # per square meter.
 
     avg_price = df["price_clean"].mean()
@@ -712,27 +711,23 @@ def print_results(df, ws):
     print(f"Average size: {avg_sqm:.1f} m²")
     print(f"Average price per m²: {avg_price_m2:,.0f} ₸")
 
-
     # print the top investment options based on the highest investment scores.
 
     print("\n🔥 TOP INVESTMENT OPTIONS 🔥\n")
 
-    TOP_N=min(3,len(df))
+    TOP_N = min(3, len(df))
 
-    for _,row in df.head(TOP_N).iterrows():
+    for _, row in df.head(TOP_N).iterrows():
 
         print("\n------------\n")
-        print("Header:",row["header"])
-        print("Location:",row["location"])
-        print("Price:",f"{row['price_clean']:,.0f} ₸")
-        print("Size:",f"{row['sqm']:.1f} m²")
-        print("Price per m²:",f"{row['price_per_m2']:,.0f} ₸")
-        print("Link:",row["link"])
-
+        print("Header:", row["header"])
+        print("Location:", row["location"])
+        print("Price:", f"{row['price_clean']:,.0f} ₸")
+        print("Size:", f"{row['sqm']:.1f} m²")
+        print("Price per m²:", f"{row['price_per_m2']:,.0f} ₸")
+        print("Link:", row["link"])
 
     print("Saved to Google Sheets")
-
-
 
 
 def main():
@@ -746,7 +741,6 @@ def main():
     6. Cleans and analyzes the data.
     7. Saves the results to Google Sheets.
     8. Prints a summary of the market and top investment options."""
-
 
     country, city, rooms, location, price_input = get_user_input()
 
