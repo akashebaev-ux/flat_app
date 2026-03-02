@@ -80,10 +80,19 @@ def start_driver():
     
     try:
         print("Starting Chrome browser...")
+
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+    # These options help Chrome run in headless mode and avoid common issues in different environments.
+
         return webdriver.Chrome(
             service=ChromeService(
                 ChromeDriverManager().install()
-            )
+            ),
+            options=options
         )
 
     except Exception:
