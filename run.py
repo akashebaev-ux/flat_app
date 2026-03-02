@@ -28,6 +28,16 @@ from selenium.webdriver.common.by import By
 # Selenium is a powerful tool for web scraping and browser automation. 
 # In this project, Selenium is used to navigate to the real estate listing website.
 
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.edge.service import Service as EdgeService
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
+import sys
+
 import pandas as pd
 import numpy as np
 
@@ -59,6 +69,57 @@ CENTER_KEYWORDS = [
     "Орбита",
     "Медеу"
     ]
+
+
+
+
+def start_driver():
+    """Attempt to start a Selenium WebDriver for Chrome, Firefox, Edge, or Safari.
+     Tries each browser in order and returns the first one that works.
+     If no browsers are available, prints an error message and exits the program."""
+    
+    try:
+        print("Starting Chrome browser...")
+        return webdriver.Chrome(
+            service=ChromeService(
+                ChromeDriverManager().install()
+            )
+        )
+
+    except Exception:
+        print("Chrome not available.")
+
+    try:
+        print("Starting Firefox browser...")
+        return webdriver.Firefox(
+            service=FirefoxService(
+                GeckoDriverManager().install()
+            )
+        )
+
+    except Exception:
+        print("Firefox not available.")
+
+    try:
+        print("Starting Edge browser...")
+        return webdriver.Edge(
+            service=EdgeService(
+                EdgeChromiumDriverManager().install()
+            )
+        )
+
+    except Exception:
+        print("Edge not available.")
+
+    try:
+        print("Starting Safari browser...")
+        return webdriver.Safari()
+
+    except Exception:
+        print("Safari not available.")
+
+    print("No supported browser found.")
+    sys.exit()
 
 
 
@@ -162,14 +223,17 @@ def scrape_data(rooms_input):
     """Scrape real estate data from krisha.kz using Selenium WebDriver.
 Returns a list of scraped data for further processing."""
 
-    driver = webdriver.Chrome()
+    driver = start_driver() 
+    
+    # Start the Selenium WebDriver to open the browser and navigate to 
+    #the real estate website.
+    all_data = []
+    
+    page = 1
 
-    all_data=[]
+    try:
+        while page<=MAX_PAGES:
 
-    page=1
-
-    while page<=MAX_PAGES:
-        
         # Iterate through Krisha.kz apartment listing pages and collect card data.
 
         # For each page:
@@ -185,29 +249,29 @@ Returns a list of scraped data for further processing."""
        # Cards missing required elements are skipped.
     
 
-        if rooms_input:
+            if rooms_input:
 
-            url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?das[live.rooms]={rooms_input}&page={page}"
+                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?das[live.rooms]={rooms_input}&page={page}"
 
-        else:
-            url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?page={page}"
+            else:
+                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/?page={page}"
 
-        driver.get(url)
+            driver.get(url)
 
-        print("Page",page)
+            print("Page",page)
 
-        try:
+            try:
 
-            WebDriverWait(driver,10).until(
-                EC.presence_of_all_elements_located(
-                    (By.CLASS_NAME,"a-card")
+                WebDriverWait(driver,10).until(
+                    EC.presence_of_all_elements_located(
+                        (By.CLASS_NAME,"a-card")
+                    )
                 )
-            )
 
-        except:
+            except Exception:
 
-            print("No more pages.")
-            break
+                print("No more pages.")
+                break
 
     # The website krisha.kz is a popular real estate listing site in Kazakhstan, 
     # where users can find apartments for sale in Almaty. The script opens this
@@ -215,35 +279,35 @@ Returns a list of scraped data for further processing."""
     # have blockers and is accessible for scraping, making it a suitable choice for 
     # collecting real estate data.
 
-        cards = driver.find_elements(By.CLASS_NAME,"a-card")
-    
-        for card in cards:
-            
-            try:
+            cards = driver.find_elements(By.CLASS_NAME,"a-card")
+        
+            for card in cards:
+                
+                try:
 
-                header=card.find_element(By.CLASS_NAME,"a-card__header").text
-                price=card.find_element(By.CLASS_NAME,"a-card__price").text
-                location=card.find_element(By.CLASS_NAME,"a-card__subtitle").text
-                link=card.find_element(By.TAG_NAME,"a").get_attribute("href")
+                    header=card.find_element(By.CLASS_NAME,"a-card__header").text
+                    price=card.find_element(By.CLASS_NAME,"a-card__price").text
+                    location=card.find_element(By.CLASS_NAME,"a-card__subtitle").text
+                    link=card.find_element(By.TAG_NAME,"a").get_attribute("href")
 
-                combined_text=card.text
+                    combined_text=card.text
 
-                all_data.append([
-                header,
-                price,
-                location,
-                link,
-                combined_text
-                ])
+                    all_data.append([
+                        header,
+                        price,
+                        location,
+                        link,
+                        combined_text
+                    ])
 
-            except Exception as e:
+                except Exception as e:
 
-                print("Skipping a card due to missing data:",e)
-                continue
-        page+=1
-
-    driver.quit()
-    #Close browser properly after scraping to free up system resources.
+                    print("Skipping a card due to missing data:",e)
+                    continue
+            page+=1
+    finally:
+        driver.quit()
+        #Close browser properly after scraping to free up system resources.
     return all_data
 
 
