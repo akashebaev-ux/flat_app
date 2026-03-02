@@ -134,15 +134,15 @@ Collect user input for real estate search criteria.
     # The code above prints a stylized title for the app using pyfiglet, 
     # followed by a simple description and a separator line.
 
-    country = input("Enter the country (only Kazakhstan is available): ").strip().lower()
+    country = input("Enter the country (only Kazakhstan is available): \n").strip().lower()
 
-    city = input("Enter the city (only Almaty is available): ").strip().lower()
+    city = input("Enter the city (only Almaty is available): \n").strip().lower()
 
-    rooms = input("Number of rooms desired (e.g., 2): ").strip()
+    rooms = input("Number of rooms desired (e.g., 2): \n").strip()
 
-    location = input("Preferred district or location (optional): ").strip()
+    location = input("Preferred district or location (optional): \n").strip()
 
-    price = input("Enter your maximum budget (0-500000000): ").strip()
+    price = input("Enter your maximum budget (0-500000000): \n").strip()
 
     # The code above collects user input for country, city, number of rooms, preferred location, 
     # and maximum budget.
