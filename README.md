@@ -54,6 +54,7 @@ Run the program:
 
 ```bash
 python main.py
+```
 
 You will be asked to enter:
 
@@ -215,6 +216,7 @@ Exports results
 ## Flowchart
 
 
+![real_estate_app](https://github.com/user-attachments/assets/c18e4097-87ee-4f0f-a997-267cd7b92872)
 
 
 
