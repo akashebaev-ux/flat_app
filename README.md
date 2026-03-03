@@ -1,24 +1,10 @@
 ```text
-██████╗ ███████╗ █████╗ ██╗
-██╔══██╗██╔════╝██╔══██╗██║
-██████╔╝█████╗  ███████║██║
-██╔══██╗██╔══╝  ██╔══██║██║
-██║  ██║███████╗██║  ██║███████╗
-╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
-
-███████╗███████╗████████╗ █████╗ ████████╗███████╗
-██╔════╝██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
-█████╗  ███████╗   ██║   ███████║   ██║   █████╗
-██╔══╝  ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝
-███████╗███████║   ██║   ██║  ██║   ██║   ███████╗
-╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-
- █████╗ ██████╗ ██████╗
-██╔══██╗██╔══██╗██╔══██╗
-███████║██████╔╝██████╔╝
-██╔══██║██╔═══╝ ██╔═══╝
-██║  ██║██║     ██║
-╚═╝  ╚═╝╚═╝     ╚═╝
+██████╗ ███████╗ █████╗ ██╗          ███████╗███████╗████████╗ █████╗ ████████╗███████╗      █████╗ ██████╗ ██████╗
+██╔══██╗██╔════╝██╔══██╗██║          ██╔════╝██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝      ██╔══██╗██╔══██╗██╔══██╗ 
+██████╔╝█████╗  ███████║██║          █████╗  ███████╗   ██║   ███████║   ██║   █████╗        ███████║██████╔╝██████╔╝
+██╔══██╗██╔══╝  ██╔══██║██║          ██╔══╝  ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝        ██╔══██║██╔═══╝ ██╔═══╝   
+██║  ██║███████╗██║  ██║███████╗     ███████╗███████║   ██║   ██║  ██║   ██║   ███████╗      ██║  ██║██║     ██║   
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝     ╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝      ╚═╝  ╚═╝╚═╝     ╚═╝          
 ```
 
 ## Overview
@@ -43,7 +29,6 @@ The program runs as a **single-use session**, allowing the user to define search
 - Ranks investment opportunities
 
 - Saves results to Google Sheets
-
 
 
 ## Instructions
@@ -215,46 +200,176 @@ Exports results
 
 ## Flowchart
 
-<img width="900" height="1400" alt="real_estate_analysis" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617">
+<img width="900" height="1200" alt="real_estate_analysis" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617">
 
 
 
+## 4. Skeleton
+
+**Terminal Layout**
+
+Simple command-line interface:
+
+```bash
+$ python main.py
+
+Enter country:
+Enter city:
+Enter rooms:
+Enter location:
+Enter budget:
+```
+
+**Output Example**
+
+```bash
+MARKET SUMMARY
+
+Average price: 38,200,000 ₸
+Average size: 58.4 m²
+Average price per m²: 653,000 ₸
 
 
+TOP INVESTMENT OPTIONS
+
+Header: 2-ком квартира
+Location: Самал
+Price: 32,000,000 ₸
+Size: 60 m²
+Price per m²: 533,000 ₸
+Link: https://...
+```
+
+## 5. Surface
+**Visual Design**
+
+Minimal terminal-based interface.
+
+Features:
+
+- Clean text layout
+
+- Clear prompts
+
+- Structured output
+
+- Market summary section
+
+- Top investment section
+
+# User Stories
+
+| Target | Expectation | Tasks | Outcome | Priority |
+|--------|------------|-------|---------|----------|
+| As a developer | I want to set up the project structure so that the application can run locally | - Create main Python script<br>- Add required imports<br>- Install dependencies<br>- Verify script runs | Script runs without errors | Must Have |
+| As a user | I want the application to save results to Google Sheets so that I can access them later | - Set up Google Sheets API<br>- Add credentials<br>- Connect using gspread<br>- Test spreadsheet access | Application connects successfully to the spreadsheet | Must Have |
+| As a user | I want a worksheet created for each run so that my data is organized by date | - Generate today’s date<br>- Open worksheet<br>- Create worksheet if missing | Worksheet appears automatically | Must Have |
+| As a user | I want to enter search criteria so that I can analyze relevant apartments | - Country input<br>- City input<br>- Rooms input<br>- Location input<br>- Budget input | Inputs are accepted correctly | Must Have |
+| As a user | I want invalid inputs rejected so that the program runs correctly | - Validate country<br>- Validate city<br>- Validate budget | Invalid values stop execution | Must Have |
+| As a user | I want the program to load apartment listings so that I can analyze the market | - Set up Selenium<br>- Open krisha.kz<br>- Wait for listings | Listings page loads successfully | Must Have |
+| As a user | I want the program to collect apartment data so that it can be analyzed | - Extract header<br>- Extract price<br>- Extract location<br>- Extract link<br>- Store data | Listings appear in the data structure | Must Have |
+| As a user | I want invalid or irrelevant listings removed so that the analysis is accurate | - Remove duplicates<br>- Filter by rooms<br>- Filter by location<br>- Clean prices<br>- Filter by budget | Only valid listings remain | Must Have |
+| As a user | I want apartments ranked by investment potential so that I can find good opportunities | - Calculate z-score<br>- Calculate liquidity score<br>- Calculate center score<br>- Calculate investment score<br>- Sort listings | Listings ranked by investment score | Must Have |
+| As a user | I want the analysis results saved and properly formatted in Google Sheets so that I can easily review and compare properties | - Clear worksheet before writing new data<br>- Add header row<br>- Upload analyzed data<br>- Format header in bold<br>- Freeze header row<br>- Highlight top investment listings | Data is successfully written to Google Sheets<br>Header remains visible when scrolling<br>Top listings are highlighted | Must Have |
+| As a user | I want property metrics calculated and unrealistic listings filtered out so that I can compare apartments using reliable market data | - Extract apartment size (sqm)<br>- Convert size values to numeric format<br>- Remove invalid or zero sizes<br>- Calculate price per m²<br>- Filter unrealistic price per m² values<br>- Implement IQR outlier filtering | Dataset includes size and price per m²<br>Invalid sizes removed<br>Extreme values filtered out | Should Have |
+| As a user | I want a summary of the market so that I understand price trends | - Calculate average price<br>- Calculate average size<br>- Calculate average price per m² | Summary printed in terminal | Should Have |
+| As a user | I want the application to support multiple countries and cities so that I can analyze real estate markets in different locations | - Support multiple countries<br>- Support multiple cities<br>- Create dynamic URL generation<br>- Validate supported locations | User can select different countries and cities | Could Have |
+| As a user | I want the application to collect listings from multiple real estate websites so that I can get a more complete view of the market | - Design scraper structure for multiple sites<br>- Add support for additional websites<br>- Merge results into a single dataset | Data can be collected from more than one website<br>Results are combined into one dataset<br>Data format is consistent | Could Have |
+| As a user | I want the application to analyze apartment images and district-level market statistics so that I can better evaluate investment opportunities | - Collect apartment images<br>- Implement AI image analysis<br>- Detect apartment features from images | Images can be processed by AI<br>Apartment features can be extracted from images<br>Results improve investment analysis | Could Have |
 
 
+## Features
+**Existing Features**
+**User Input**
 
+Collects:
 
+- Country
 
+- City
 
+- Rooms
 
+- Location
 
+- Budget
 
+**Input Validation**
 
+Ensures:
 
-## Reminders
+- Country supported
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+- City supported
 
-## Creating the Heroku app
+- Budget numeric
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+**Web Scraper**
 
-1. `heroku/python`
-2. `heroku/nodejs`
+Uses Selenium to scrape:
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+- Title
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- Price
 
-Connect your GitHub repository and deploy as normal.
+- Location
 
-## Constraints
+- Link
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- Description
 
----
+**Data Cleaning**
 
-Happy coding!
+- Remove duplicates
+
+- Clean price values
+
+- Extract sqm
+
+- Extract rooms
+
+**Investment Metrics**
+
+Calculates:
+
+- price_per_m2
+
+- z_score
+
+- liquidity_score
+
+- center_score
+
+- investment_score
+
+**Outlier Filtering**
+
+- Uses IQR method to remove unrealistic prices.
+
+**Google Sheets Export**
+
+Exports:
+
+- Listings
+
+- Metrics
+
+- Scores
+
+**Spreadsheet Formatting**
+
+- Bold headers
+
+- Frozen header row
+
+- Highlight top investments
+
+**Market Summary**
+
+Displays:
+
+- Average price
+
+- Average sqm
+
+- Average price per m²
