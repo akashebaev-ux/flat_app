@@ -797,7 +797,9 @@ To run your own version of this project, you must create a Google Sheet.
 
 The application will automatically create daily worksheets such as:
 
-<img width="900" alt="Google Sheets" src="https://github.com/user-attachments/assets/b12ca9fc-19ee-4768-b8df-7801971a7fe1">
+<img width="900" alt="Google Sheets 1+" src="https://github.com/user-attachments/assets/657ce919-b029-432e-87b2-06cdc0562164">
+
+
 
 
 
