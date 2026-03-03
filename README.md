@@ -771,3 +771,76 @@ For detailed testing documentation, please refer to:
 
 
 
+# Google Sheets API Setup
+
+This application uses **Google Sheets** as a lightweight cloud database to store analyzed real estate listings.
+
+Each time the application runs, it:
+
+- Connects to Google Sheets via the API  
+- Opens the spreadsheet `real_estate_analysis_app`  
+- Creates (or opens) a worksheet named with today’s date  
+- Saves analyzed listings and investment scores  
+
+---
+
+## Create Your Own Google Sheet
+
+To run your own version of this project, you must create a Google Sheet.
+
+### Step 1 — Create Spreadsheet
+
+1. Go to Google Sheets  
+2. Create a new spreadsheet  
+3. Name it:
+
+
+The application will automatically create daily worksheets such as:
+
+<img width="900" alt="Google Sheets" src="https://github.com/user-attachments/assets/b12ca9fc-19ee-4768-b8df-7801971a7fe1">
+
+
+
+No manual worksheet setup is required.
+
+---
+
+## Google Cloud Platform Setup
+
+You must create a **Service Account** and enable the required APIs.
+
+### Step 1 — Create a New Project
+
+1. Go to Google Cloud Console  
+2. Click **Select a Project** → **New Project**  
+3. Enter a project name  
+4. Click **Create**  
+5. Click **Select Project**
+
+---
+
+### Step 2 — Enable Required APIs
+
+Go to:
+
+APIs & Services → Library
+
+Enable:
+
+- Google Drive API  
+- Google Sheets API  
+
+---
+
+### Step 3 — Create Service Account Credentials
+
+1. Go to **APIs & Services → Credentials**
+2. Click **Create Credentials**
+3. Choose **Service Account**
+4. Enter a service account name
+5. Click **Create**
+6. Under Role, select:
+
+
+
+
