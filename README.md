@@ -7,7 +7,7 @@
 ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝     ╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝      ╚═╝  ╚═╝╚═╝     ╚═╝          
 ```
 
-## Overview
+# Overview
 
 **Real Estate Analysis App** is a command-line data analysis tool that scrapes apartment listings and identifies potential real estate investment opportunities.
 
@@ -31,7 +31,7 @@ The program runs as a **single-use session**, allowing the user to define search
 - Saves results to Google Sheets
 
 
-## Instructions
+# Instructions
 
 **How to Use the App**
 
@@ -93,7 +93,7 @@ A command-line real estate analysis tool that:
 - Saves results to Google Sheets
 
 
-## The 5 Planes of UX
+# The 5 Planes of UX
 ## 1. Strategy
 
 **Purpose**
@@ -373,3 +373,397 @@ Displays:
 - Average sqm
 
 - Average price per m²
+
+## Future Features
+
+**Multiple Cities**
+
+- Search multiple cities and countries.
+
+**Multiple Websites**
+
+- Scrape multiple real estate websites.
+
+**AI Image Analysis**
+
+- Analyze apartment images.
+
+**District Statistics**
+
+- Analyze districts separately.
+
+## Tools & Technologies
+
+| Tool / Technology | Purpose |
+|-------------------|----------|
+| Python | Core programming language |
+| Selenium | Automated web scraping and browser automation |
+| WebDriver Manager | Automatic ChromeDriver management |
+| Pandas | Data processing and analysis |
+| NumPy | Statistical calculations and numerical operations |
+| Google Sheets API | Cloud-based data storage |
+| gspread | Google Sheets integration for reading/writing data |
+| gspread-formatting | Formatting Google Sheets output |
+| google-auth | Authentication with Google APIs |
+| python-dotenv | Environment variable management |
+| Requests | HTTP requests handling |
+| OAuthLib | Secure API authentication flows |
+| Draw.io | Flowchart and system architecture design |
+| Git | Version control system |
+| GitHub | Code hosting and collaboration |
+| VSCode | Development environment |
+| ChromeDriver | Selenium browser driver |
+
+# Functions
+
+The primary functions used in the Real Estate Analysis App are:
+
+---
+
+## start_driver()
+
+Initializes a Selenium WebDriver.
+
+- Attempts to launch Chrome in headless mode.
+- Falls back to Firefox, Edge, or Safari if needed.
+- Automatically installs drivers using `webdriver-manager`.
+- Exits the program if no supported browser is available.
+
+---
+
+## get_user_input()
+
+Collects search parameters from the user.
+
+Prompts for:
+
+- Country  
+- City  
+- Number of rooms  
+- Preferred district (optional)  
+- Maximum budget  
+
+Also prints the application title using `pyfiglet`.
+
+---
+
+## validate_location(country, city)
+
+Validates user input for supported locations.
+
+- Ensures country is `"kazakhstan"`.
+- Ensures city is `"almaty"`.
+- Exits the program if unsupported.
+
+---
+
+## parse_price(price_input)
+
+Parses and validates the maximum budget input.
+
+- Converts input to integer.
+- Defaults to 500,000,000 if invalid or negative.
+- Prevents program failure due to incorrect input.
+
+---
+
+## setup_google_sheets()
+
+Establishes connection to Google Sheets.
+
+- Authenticates using service account credentials.
+- Opens the spreadsheet `real_estate_analysis_app`.
+- Creates or opens a worksheet named with today's date.
+- Returns the worksheet object.
+
+---
+
+## scrape_data(rooms_input)
+
+Scrapes apartment listings from krisha.kz.
+
+- Launches Selenium WebDriver.
+- Iterates pages up to `MAX_PAGES`.
+- Waits for listing cards to load.
+- Extracts:
+  - Header
+  - Price
+  - Location
+  - Link
+  - Combined text
+- Returns raw listing data as a list.
+
+---
+
+## clean_data(all_data, rooms_input, location_input, max_price)
+
+Processes and analyzes scraped data.
+
+Performs:
+
+- DataFrame creation  
+- Duplicate removal  
+- Room extraction using regex  
+- Location filtering  
+- Price cleaning and numeric conversion  
+- Budget filtering  
+- Apartment size (sqm) extraction  
+- Price per m² calculation  
+- IQR outlier removal  
+- Z-score calculation  
+- Undervaluation scoring  
+- Liquidity scoring  
+- Center location scoring  
+- Final investment score calculation  
+- Sorting by investment score  
+
+Returns a cleaned and ranked DataFrame.
+
+---
+
+## save_to_sheets(df, ws)
+
+Exports analyzed data to Google Sheets.
+
+- Clears worksheet  
+- Writes header row  
+- Uploads:
+  - Header  
+  - Price  
+  - Location  
+  - Link  
+  - sqm  
+  - price_per_m2  
+  - z_score  
+  - liquidity_score  
+  - center_score  
+  - investment_score  
+
+---
+
+## print_results(df, ws)
+
+Formats and displays results.
+
+In Google Sheets:
+
+- Bolds header row  
+- Freezes header row  
+- Highlights top 3 investment listings  
+
+In terminal:
+
+- Prints market summary:
+  - Average price  
+  - Average size  
+  - Average price per m²  
+- Displays top 3 investment opportunities  
+- Confirms save to Google Sheets  
+
+---
+
+## main()
+
+Orchestrates the full application workflow.
+
+Steps:
+
+1. Collect user input  
+2. Validate location  
+3. Parse budget  
+4. Setup Google Sheets  
+5. Scrape listings  
+6. Clean and analyze data  
+7. Save results  
+8. Display summary  
+
+Acts as the central controller of the application.
+
+---
+
+## Program Entry Point
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
+# Imports
+
+The following Python packages and external libraries were used in this project:
+
+---
+
+## Core Dependencies
+
+### gspread
+Used to interact with Google Sheets.  
+Allows reading from and writing to spreadsheets, effectively serving as a lightweight cloud database.
+
+### google.oauth2.service_account
+Handles secure authentication with the Google Sheets API using a service account.
+
+### selenium
+Provides browser automation capabilities for scraping real estate listings.
+
+### webdriver-manager
+Automatically downloads and manages browser drivers (Chrome, Firefox, Edge), eliminating manual driver setup.
+
+### pandas
+Used for data manipulation and analysis.  
+Transforms raw scraped data into structured DataFrames for processing.
+
+### numpy
+Provides numerical operations required for statistical calculations such as z-scores and investment metrics.
+
+### gspread-formatting
+Enables formatting of Google Sheets output (bold headers, frozen rows, highlighted cells).
+
+### pyfiglet
+Generates ASCII-art text for the application title displayed at startup.
+
+---
+
+## Standard Library
+
+### datetime
+Used to generate the current date for automatic worksheet naming.
+
+### sys
+Used to safely terminate the program if no supported browser is available.
+
+---
+
+## Selenium Components
+
+### WebDriverWait & expected_conditions
+Used to ensure webpage elements load before scraping begins, improving reliability.
+
+### By
+Locates elements on a webpage using class names, tags, and other selectors.
+
+### ChromeService / FirefoxService / EdgeService
+Used to configure and launch specific browser drivers.
+
+---
+
+## Why These Libraries Were Chosen
+
+- **Selenium** enables dynamic website interaction where traditional HTTP requests are insufficient.
+- **Pandas & NumPy** provide powerful data analysis capabilities.
+- **Google Sheets API** removes the need for a traditional database while enabling persistent storage.
+- **webdriver-manager** simplifies environment setup and improves portability.
+- **gspread-formatting** enhances output presentation for better usability.
+
+Together, these tools create a complete pipeline:
+Web scraping → Data processing → Statistical analysis → Cloud storage → Presentation.
+
+
+# Agile Development Process
+
+## GitHub Projects
+
+GitHub Projects was used as an Agile planning and tracking tool throughout development.
+
+A Kanban-style board was created to manage:
+
+- User Stories  
+- Feature implementation  
+- Bug fixes  
+- Future improvements  
+
+Tasks were organised into workflow stages such as:
+
+- To Do  
+- In Progress  
+- Done  
+
+This approach ensured structured progress and clear visibility of development priorities.
+
+<img width="1908" height="881" alt="User story" src="https://github.com/user-attachments/assets/7962afa5-c8c9-467d-969e-2302fb3f3435">
+
+---
+
+## GitHub Issues
+
+GitHub Issues was used to:
+
+- Define User Stories  
+- Track feature development  
+- Record bugs  
+- Document improvements  
+
+Each issue followed a user-story format:
+
+> As a user, I want... so that...
+
+Issues were labelled according to priority and category.  
+Comments were used to document thought processes, implementation decisions, and debugging steps.
+
+This provided a transparent development history and clear traceability between requirements and implementation.
+
+<img width="900" alt="User story 3" src="https://github.com/user-attachments/assets/ac19f9e7-e021-46c8-9f53-51c39304d0b2">
+
+---
+
+<img width="900" alt="User story 4" src="https://github.com/user-attachments/assets/37a4456c-9a07-455f-9985-7b05fb37966b">
+
+
+## MoSCoW Prioritisation
+
+User Stories were prioritised using the MoSCoW framework:
+
+### Must Have
+Core functionality required for the application to operate correctly:
+- User input collection  
+- Web scraping  
+- Data cleaning  
+- Investment scoring  
+- Google Sheets export  
+
+### Should Have
+Important features that enhance usability:
+- Market summary statistics  
+- Investment ranking  
+- Spreadsheet formatting  
+
+### Could Have
+Enhancements planned for future iterations:
+- Multi-city support  
+- Multi-website scraping  
+- Advanced filtering  
+Future or long-term improvements:
+- AI image analysis  
+- District-level predictive analytics  
+- Historical performance tracking  
+
+This prioritisation helped maintain focus on delivering a functional MVP while planning future scalability.
+
+---
+
+# Testing
+
+Comprehensive testing was performed throughout development.
+
+Testing included:
+
+- Input validation checks  
+- Web scraping reliability  
+- Data cleaning accuracy  
+- Outlier filtering validation  
+- Investment score calculations  
+- Google Sheets integration  
+- Error handling scenarios  
+
+For detailed testing documentation, please refer to:
+<img width="900" alt="PEP8 end" src="https://github.com/user-attachments/assets/5144b68a-9ffe-42a7-b8ed-b73af7b87145">
+
+---
+
+<img width="900" alt="PEP8 clean" src="https://github.com/user-attachments/assets/3736527a-d7f8-4ce2-92e6-eda3b38007ca">
+
+# Deployment
+
+
+
+
