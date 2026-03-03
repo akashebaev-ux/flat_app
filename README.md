@@ -708,6 +708,10 @@ This provided a transparent development history and clear traceability between r
 
 <img width="900" alt="User story 4" src="https://github.com/user-attachments/assets/37a4456c-9a07-455f-9985-7b05fb37966b">
 
+---
+
+<img width="900" alt="User story done" src="https://github.com/user-attachments/assets/92df8a37-d9fa-480f-88a6-14622202a971">
+
 
 ## MoSCoW Prioritisation
 
