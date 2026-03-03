@@ -215,8 +215,8 @@ Exports results
 
 ## Flowchart
 
+<img width="1101" height="1931" alt="real_estate_analysis drawio" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617" />
 
-![real_estate_app](https://github.com/user-attachments/assets/c18e4097-87ee-4f0f-a997-267cd7b92872)
 
 
 
