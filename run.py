@@ -23,13 +23,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 # Selenium is a powerful tool for web scraping and browser automation.
 # Selenium is used to navigate to the real estate listing website.
-
-import sys
 
 import pandas as pd
 import numpy as np
@@ -64,28 +62,23 @@ CENTER_KEYWORDS = [
 
 
 def start_driver():
-    """To start a Selenium WebDriver for Chrome, Firefox, Edge, or Safari.
-     Tries each browser in order and returns the first one that works.
-     If no browsers are available, prints an error message and
-     exits the program."""
 
-    try:
-        print("Starting Chrome browser...")
+    print("Starting Chrome browser...")
 
-        options = webdriver.ChromeOptions()
-        options.binary_location = "/app/.apt/usr/bin/google-chrome"
+    options = webdriver.ChromeOptions()
+    options.binary_location = "/app/.apt/usr/bin/google-chrome"
 
-        options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
 
-        driver = webdriver.Chrome(options=options)
-        return driver
+    driver = webdriver.Chrome(
+        service=Service("/app/.chromedriver/bin/chromedriver"),
+        options=options
+    )
 
-    except Exception as e:
-        print("Chrome failed to start:", e)
-        sys.exit(1)
+    return driver
 
 
 def get_user_input():
