@@ -1,39 +1,13 @@
-"""
-Real Estate Analysis App
-
-This script:
-- Connects to Google Sheets using gspread
-- Creates or opens a worksheet named with today's date
-- Uses Selenium WebDriver to open a real estate website
-- Prepares data for storage in Google Sheets
-
-Selenium is used to automate the browser and collect
-real estate data such as prices, locations, and links.
-"""
-
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
-# Selenium waiting tools.
-# Used to wait for webpage elements to load before scraping.
-# Improves scraper reliability.
-
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-
-# Selenium is a powerful tool for web scraping and browser automation.
-# Selenium is used to navigate to the real estate listing website.
+from playwright.sync_api import sync_playwright
 
 import pandas as pd
 import numpy as np
 
 # Pandas helps me organize and analyze my scraped data easier.
-# In my project, pandas turns raw Selenium data into a clean table.
 
 from gspread_formatting import (
     CellFormat, TextFormat, Color, format_cell_range, set_frozen
@@ -59,28 +33,6 @@ CENTER_KEYWORDS = [
     "Орбита",
     "Медеу"
     ]
-
-
-def start_driver():
-
-    print("Starting Chrome browser...")
-
-    options = webdriver.ChromeOptions()
-
-    options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
-
-    options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--remote-debugging-port=9222")
-
-    service = Service("/app/.chrome-for-testing/chromedriver-linux64/chromedriver")
-
-    driver = webdriver.Chrome(service=service, options=options)
-
-    return driver
 
 
 def get_user_input():
@@ -179,91 +131,71 @@ def setup_google_sheets():
 
 
 def scrape_data(rooms_input):
-    """Scrape real estate data from krisha.kz using Selenium WebDriver.
-Returns a list of scraped data for further processing."""
 
-    driver = start_driver()
-
-    # Start the Selenium WebDriver to open the browser and navigate to
-    # the real estate website.
     all_data = []
+    page_num = 1
 
-    page = 1
+    with sync_playwright() as p:
 
-    try:
-        while page <= MAX_PAGES:
+        browser = p.chromium.launch(
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-dev-shm-usage"
+            ]
+        )
 
-            # Iterate through Krisha.kz apartment listing pages and collect
-            # card data.
+        page = browser.new_page()
 
-            # For each page:
-            # - Open the page using Selenium
-            # - Find all elements with class 'a-card'
-            # - Extract header, price, location, link, and full card text
-            # - Store extracted data in all_data list
-
-            # The loop continues until MAX_PAGES is reached.
-
-            # Notes
-            # Cards missing required elements are skipped.
+        while page_num <= MAX_PAGES:
 
             if rooms_input:
 
                 url = (
                     f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
-                    f"?das[live.rooms]={rooms_input}&page={page}"
+                    f"?das[live.rooms]={rooms_input}&page={page_num}"
                 )
 
             else:
+
                 url = (
                     f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
-                    f"?page={page}"
+                    f"?page={page_num}"
                 )
 
-            driver.get(url)
+            print("Page", page_num)
 
-            print("Page", page)
+            page.goto(url)
 
             try:
-
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located(
-                        (By.CLASS_NAME, "a-card")
-                    )
-                )
-
+                page.wait_for_selector(".a-card", timeout=10000)
             except Exception:
-
                 print("No more pages.")
                 break
 
-    # The website krisha.kz is the popular real estate listing
-    # website in Kazakhstan,where users can find apartments for sale in Almaty.
-    # The script opens this website using Selenium WebDriver to prepare for
-    # data extraction. This website doesn't have blockers and is accessible
-    # for scraping, making it a suitable choice for collecting real estate
-    # data.
-
-            cards = driver.find_elements(By.CLASS_NAME, "a-card")
+            cards = page.query_selector_all(".a-card")
 
             for card in cards:
 
                 try:
 
-                    header = card.find_element(
-                        By.CLASS_NAME, "a-card__header"
-                    ).text
-                    price = card.find_element(
-                        By.CLASS_NAME, "a-card__price"
-                    ).text
-                    location = card.find_element(
-                        By.CLASS_NAME, "a-card__subtitle"
-                    ).text
-                    link = card.find_element(
-                        By.TAG_NAME, "a"
-                    ).get_attribute("href")
+                    header = card.query_selector(
+                        ".a-card__header"
+                    ).inner_text()
 
-                    combined_text = card.text
+                    price = card.query_selector(
+                        ".a-card__price"
+                    ).inner_text()
+
+                    location = card.query_selector(
+                        ".a-card__subtitle"
+                    ).inner_text()
+
+                    # 🟡 Small improvement for relative URLs
+                    link = card.query_selector("a").get_attribute("href")
+                    link = "https://krisha.kz" + link
+
+                    combined_text = card.inner_text()
 
                     all_data.append([
                         header,
@@ -275,12 +207,13 @@ Returns a list of scraped data for further processing."""
 
                 except Exception as e:
 
-                    print("Skipping a card due to missing data:", e)
+                    print("Skipping card:", e)
                     continue
-            page += 1
-    finally:
-        driver.quit()
-        # Close browser properly after scraping to free up system resources.
+
+            page_num += 1
+
+        browser.close()
+
     return all_data
 
 
