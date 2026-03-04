@@ -256,12 +256,16 @@ Returns a list of scraped data for further processing."""
 
             if rooms_input:
 
-                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
-                f"?das[live.rooms]={rooms_input}&page={page}"
+                url = (
+                    f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
+                    f"?das[live.rooms]={rooms_input}&page={page}"
+                )
 
             else:
-                url = f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
-                f"?page={page}"
+                url = (
+                    f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
+                    f"?page={page}"
+                )
 
             driver.get(url)
 
