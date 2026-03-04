@@ -23,18 +23,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 # Selenium is a powerful tool for web scraping and browser automation.
 # Selenium is used to navigate to the real estate listing website.
-
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.edge.service import Service as EdgeService
-
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 import sys
 
@@ -80,54 +73,19 @@ def start_driver():
         print("Starting Chrome browser...")
 
         options = webdriver.ChromeOptions()
+        options.binary_location = "/app/.apt/usr/bin/google-chrome"
+
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
-    # These options help Chrome run in headless mode and avoid common
-    # issues in different environments.
 
-        return webdriver.Chrome(
-            service=ChromeService(
-                ChromeDriverManager().install()
-            ),
-            options=options
-        )
+        driver = webdriver.Chrome(options=options)
+        return driver
 
-    except Exception:
-        print("Chrome not available.")
-
-    try:
-        print("Starting Firefox browser...")
-        return webdriver.Firefox(
-            service=FirefoxService(
-                GeckoDriverManager().install()
-            )
-        )
-
-    except Exception:
-        print("Firefox not available.")
-
-    try:
-        print("Starting Edge browser...")
-        return webdriver.Edge(
-            service=EdgeService(
-                EdgeChromiumDriverManager().install()
-            )
-        )
-
-    except Exception:
-        print("Edge not available.")
-
-    try:
-        print("Starting Safari browser...")
-        return webdriver.Safari()
-
-    except Exception:
-        print("Safari not available.")
-
-    print("No supported browser found.")
-    sys.exit()
+    except Exception as e:
+        print("Chrome failed to start:", e)
+        sys.exit(1)
 
 
 def get_user_input():
