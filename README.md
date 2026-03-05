@@ -1,10 +1,17 @@
 ```text
-██████╗ ███████╗ █████╗ ██╗          ███████╗███████╗████████╗ █████╗ ████████╗███████╗      █████╗ ██████╗ ██████╗
-██╔══██╗██╔════╝██╔══██╗██║          ██╔════╝██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝      ██╔══██╗██╔══██╗██╔══██╗ 
-██████╔╝█████╗  ███████║██║          █████╗  ███████╗   ██║   ███████║   ██║   █████╗        ███████║██████╔╝██████╔╝
-██╔══██╗██╔══╝  ██╔══██║██║          ██╔══╝  ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝        ██╔══██║██╔═══╝ ██╔═══╝   
-██║  ██║███████╗██║  ██║███████╗     ███████╗███████║   ██║   ██║  ██║   ██║   ███████╗      ██║  ██║██║     ██║   
-╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝     ╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝      ╚═╝  ╚═╝╚═╝     ╚═╝          
+██████╗ ███████╗ █████╗ ██╗          ███████╗███████╗████████╗ █████╗ ████████╗███████╗      
+██╔══██╗██╔════╝██╔══██╗██║          ██╔════╝██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝      
+██████╔╝█████╗  ███████║██║          █████╗  ███████╗   ██║   ███████║   ██║   █████╗        
+██╔══██╗██╔══╝  ██╔══██║██║          ██╔══╝  ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝          
+██║  ██║███████╗██║  ██║███████╗     ███████╗███████║   ██║   ██║  ██║   ██║   ███████╗      
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝     ╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝      
+
+█████╗ ██████╗ ██████╗
+██╔══██╗██╔══██╗██╔══██╗ 
+███████║██████╔╝██████╔╝
+██╔══██║██╔═══╝ ██╔═══╝ 
+██║  ██║██║     ██║   
+╚═╝  ╚═╝╚═╝     ╚═╝    
 ```
 
 # Overview
@@ -768,6 +775,208 @@ For detailed testing documentation, please refer to:
 
 # Deployment
 
+This project was deployed using **Heroku**, a cloud Platform as a Service (PaaS) that allows developers to build, run, and operate applications entirely in the cloud.
+
+The application scrapes real estate listings, analyzes investment opportunities using Python, and stores the results in Google Sheets.
+
+---
+
+## Heroku Deployment
+
+To deploy this application to Heroku, follow the steps below.
+
+### 1. Create a Heroku App
+
+1. Log in to your **Heroku account**.
+2. From the **Heroku Dashboard**, click **New** in the top-right corner.
+3. Select **Create new app**.
+4. Enter a **unique app name**.
+5. Choose the region closest to you (**EU or USA**).
+6. Click **Create App**.
+
+---
+
+### 2. Configure Environment Variables
+
+Navigate to:
+
+`Settings → Reveal Config Vars`
+
+Add the following variable:
+
+| KEY | VALUE |
+|-----|------|
+| PORT | 8000 |
+
+If using Google Sheets credentials, add them as well:
+
+| KEY | VALUE |
+|-----|------|
+| CREDS_JSON | (paste the contents of your creds.json file) |
+
+These credentials allow the application to securely access the **Google Sheets API**.
+
+---
+
+### 3. Add Buildpacks
+
+Heroku requires buildpacks to install dependencies and run the application.
+
+Navigate to:
+
+`Settings → Buildpacks`
+
+Add the following buildpacks in this order:
+
+1. **Python**
+2. **Node.js**
+
+The order is important because the Python backend must run before Node services.
+
+---
+
+### 4. Required Deployment Files
+
+Heroku requires several files in the project repository to run properly.
+
+#### requirements.txt
+
+This file lists all Python dependencies used in the project.
+
+Install dependencies locally with:
+
+```bash
+pip3 install -r requirements.txt
+```
+
+If new packages are installed, update the file using:
+
+```bash
+pip3 freeze --local > requirements.txt
+```
+
+---
+
+#### Procfile
+
+The **Procfile** tells Heroku how to run the application.
+
+Create it with the following command:
+
+```bash
+echo web: node index.js > Procfile
+```
+
+---
+
+#### .python-version
+
+This file specifies the Python version Heroku should use.
+
+Example:
+
+```text
+3.12
+```
+
+---
+
+### 5. Connect Heroku to GitHub
+
+From the **Deploy tab** in Heroku:
+
+1. Select **GitHub** as the deployment method.
+2. Search for your repository.
+3. Click **Connect**.
+
+You can choose between **automatic deployment** or **manual deployment**.
+
+---
+
+### Automatic Deployment (Recommended)
+
+Heroku automatically redeploys the application whenever new changes are pushed to GitHub.
+
+---
+
+### Manual Deployment
+
+Alternatively, deploy using the terminal.
+
+Login to Heroku:
+
+```bash
+heroku login -i
+```
+
+Set the Heroku remote:
+
+```bash
+heroku git:remote -a your_app_name
+```
+
+Push the application:
+
+```bash
+git push heroku main
+```
+
+
+---
+
+### 6. Application Deployment
+
+After deployment, Heroku will:
+
+- Install dependencies from **requirements.txt**
+- Run the Python application
+- Execute the real estate scraping and analysis workflow
+
+The application will run inside a **web-based terminal interface**.
+
+---
+
+### 7. Live Application
+
+The live deployed application can be accessed here:
+
+[Real Estate Analysis App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+
+
+---
+
+### Notes
+
+- The Google Sheets credentials file (`creds.json`) should **not be uploaded to GitHub**.
+- Instead, the credentials should be stored securely in **Heroku Config Vars**.
+- Playwright browsers may need to be installed during deployment using:
+
+**playwright install chromium**
+
+This ensures the scraper can run correctly in the cloud environment.
+
+## Installing Puppeteer Heroku Buildpack
+
+To run Puppeteer on Heroku, additional system dependencies are required because Heroku does not include all the libraries needed for Chromium by default. The `puppeteer-heroku-buildpack` installs the required dependencies so Puppeteer can run correctly in the Heroku environment.
+
+### 1. Add the Puppeteer Buildpack
+
+Install the buildpack using the Heroku CLI:
+
+[heroku buildpacks:add](https://github.com/jontewks/puppeteer-heroku-buildpack)
+
+
+Alternatively, you can add it from the **Heroku Dashboard**:
+
+1. Open your application in the Heroku Dashboard.
+2. Navigate to **Settings**.
+3. Click **Add Buildpack**.
+4. Enter the following URL:
+
+[Puppeteer Heroku Buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack)
+
+
+<img width="900" src="https://github.com/user-attachments/assets/bed68260-90df-4a75-834c-1734c39ba74d">
 
 
 
