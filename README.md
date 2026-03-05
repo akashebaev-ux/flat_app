@@ -16,26 +16,56 @@
 
 # Overview
 
-**Real Estate Analysis App** is a command-line data analysis tool that scrapes apartment listings and identifies potential real estate investment opportunities.
+# Real Estate Investment Analysis App
 
-The application collects apartment listings from real estate websites using Selenium, processes the data with Pandas, calculates investment metrics, and exports results to Google Sheets.
+A Python application that **scrapes apartment listings from Krisha.kz**, analyzes real estate market data, and identifies **potential investment opportunities**.
 
-The program runs as a **single-use session**, allowing the user to define search criteria such as location, rooms, and budget, and performs investment metric calculations including price per m² and undervaluation detection.
+The application automatically processes property listings using statistical analysis and exports the results to **Google Sheets** for easy viewing and tracking.
 
+---
 
-**The application:**
+## Features
 
-- Scrapes apartment listings
+- Scrapes apartment listings from **Krisha.kz**
+- Filters listings by **number of rooms**
+- Optional filtering by **location or district**
+- Filters properties by **maximum budget**
+- Calculates **price per square meter**
+- Removes unrealistic listings using **statistical filtering**
+- Detects **undervalued properties**
+- Generates an **investment score**
+- Saves results to **Google Sheets**
+- Highlights the **top investment opportunities**
 
-- Cleans and filters data
+---
 
-- Calculates price per square meter
+## Project Workflow
 
-- Identifies undervalued apartments
+1. User enters search criteria:
+   - Country
+   - City
+   - Number of rooms
+   - Preferred location
+   - Maximum budget
 
-- Ranks investment opportunities
+2. **Playwright** scrapes property listings from Krisha.kz.
 
-- Saves results to Google Sheets
+3. The data is cleaned and structured using **Pandas**.
+
+4. The application calculates:
+
+   - Apartment size (m²)
+   - Price per square meter
+   - Z-score (market deviation)
+   - Liquidity score
+   - Center location score
+   - Overall investment score
+
+5. Listings are ranked by **investment score**.
+
+6. Results are exported to **Google Sheets** where the best opportunities are highlighted.
+
+---
 
 
 # Instructions
@@ -82,7 +112,8 @@ The program will:
 
 5. Export results
 
-## UX
+
+# UX
 **MVP**
 
 A command-line real estate analysis tool that:
@@ -101,6 +132,7 @@ A command-line real estate analysis tool that:
 
 
 # The 5 Planes of UX
+
 ## 1. Strategy
 
 **Purpose**
@@ -220,12 +252,15 @@ Simple command-line interface:
 ```bash
 $ python main.py
 
-Enter country:
-Enter city:
-Enter rooms:
-Enter location:
-Enter budget:
+Enter the country (only Kazakhstan is available):
+Enter the city (only Almaty is available):
+Number of rooms desired (e.g., 2):
+Preferred district or location (optional):
+Enter your maximum budget (0 - 500000000):
 ```
+---
+<img width="900" src="https://github.com/user-attachments/assets/6674821f-f979-4c25-8e77-d9b65e18cfa6">
+
 
 **Output Example**
 
@@ -273,7 +308,7 @@ Features:
 | As a user | I want a worksheet created for each run so that my data is organized by date | - Generate today’s date<br>- Open worksheet<br>- Create worksheet if missing | Worksheet appears automatically |<img width="100" height="500" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569">|
 | As a user | I want to enter search criteria so that I can analyze relevant apartments | - Country input<br>- City input<br>- Rooms input<br>- Location input<br>- Budget input | Inputs are accepted correctly |<img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569">|
 | As a user | I want invalid inputs rejected so that the program runs correctly | - Validate country<br>- Validate city<br>- Validate budget | Invalid values stop execution | <img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569"> |
-| As a user | I want the program to load apartment listings so that I can analyze the market | - Set up Selenium<br>- Open krisha.kz<br>- Wait for listings | Listings page loads successfully | <img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569"> |
+| As a user | I want the program to load apartment listings so that I can analyze the market | - Set up Playwright<br>- Open krisha.kz<br>- Wait for listings | Listings page loads successfully | <img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569"> |
 | As a user | I want the program to collect apartment data so that it can be analyzed | - Extract header<br>- Extract price<br>- Extract location<br>- Extract link<br>- Store data | Listings appear in the data structure | <img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569"> |
 | As a user | I want invalid or irrelevant listings removed so that the analysis is accurate | - Remove duplicates<br>- Filter by rooms<br>- Filter by location<br>- Clean prices<br>- Filter by budget | Only valid listings remain | <img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569"> |
 | As a user | I want apartments ranked by investment potential so that I can find good opportunities | - Calculate z-score<br>- Calculate liquidity score<br>- Calculate center score<br>- Calculate investment score<br>- Sort listings | Listings ranked by investment score |<img width="100" height="50" src="https://github.com/user-attachments/assets/e03d9d01-51a9-40d7-8970-3551bfcdf569">|
@@ -285,7 +320,7 @@ Features:
 | As a user | I want the application to analyze apartment images and district-level market statistics so that I can better evaluate investment opportunities | - Collect apartment images<br>- Implement AI image analysis<br>- Detect apartment features from images | Images can be processed by AI<br>Apartment features can be extracted from images<br>Results improve investment analysis |<img width="100" height="50" src="https://github.com/user-attachments/assets/08a75d02-ba3d-47f2-a3bc-19bb0b7ecc02">|
 
 
-## Features
+# Features
 **Existing Features**
 **User Input**
 
@@ -313,7 +348,7 @@ Ensures:
 
 **Web Scraper**
 
-Uses Selenium to scrape:
+Uses Playwright to scrape:
 
 - Title
 
@@ -403,38 +438,27 @@ Displays:
 
 | Tool / Technology | Purpose |
 |-------------------|----------|
-| Python | Core programming language |
-| Selenium | Automated web scraping and browser automation |
-| WebDriver Manager | Automatic ChromeDriver management |
-| Pandas | Data processing and analysis |
-| NumPy | Statistical calculations and numerical operations |
-| Google Sheets API | Cloud-based data storage |
-| gspread | Google Sheets integration for reading/writing data |
-| gspread-formatting | Formatting Google Sheets output |
-| google-auth | Authentication with Google APIs |
-| python-dotenv | Environment variable management |
-| Requests | HTTP requests handling |
-| OAuthLib | Secure API authentication flows |
-| Draw.io | Flowchart and system architecture design |
-| Git | Version control system |
-| GitHub | Code hosting and collaboration |
-| VSCode | Development environment |
-| ChromeDriver | Selenium browser driver |
+| Python | Core programming language used to build the application |
+| Playwright | Automated web scraping and browser automation for extracting real estate listings |
+| Pandas | Data cleaning, transformation, and analysis of scraped property data |
+| NumPy | Statistical calculations and numerical analysis for investment scoring |
+| Google Sheets API | Cloud-based storage used to save analyzed real estate data |
+| gspread | Python library for interacting with Google Sheets (reading and writing data) |
+| gspread-formatting | Applies formatting such as bold headers, frozen rows, and highlighted results in Google Sheets |
+| google-auth | Handles authentication with Google APIs using a service account |
+| requests | HTTP library used by Google API integrations |
+| python-dotenv | Manages environment variables and configuration settings |
+| pyfiglet | Generates ASCII art titles for the console interface |
+| Regular Expressions (via Pandas) | Extracts structured data such as number of rooms and apartment size from listing text |
+| Git | Version control system used to track code changes |
+| GitHub | Platform for hosting the repository and project collaboration |
+| VS Code | Development environment used to write and run the code |
+
+
 
 # Functions
 
 The primary functions used in the Real Estate Analysis App are:
-
----
-
-## start_driver()
-
-Initializes a Selenium WebDriver.
-
-- Attempts to launch Chrome in headless mode.
-- Falls back to Firefox, Edge, or Safari if needed.
-- Automatically installs drivers using `webdriver-manager`.
-- Exits the program if no supported browser is available.
 
 ---
 
@@ -489,7 +513,7 @@ Establishes connection to Google Sheets.
 
 Scrapes apartment listings from krisha.kz.
 
-- Launches Selenium WebDriver.
+- Launches Playwright.
 - Iterates pages up to `MAX_PAGES`.
 - Waits for listing cards to load.
 - Extracts:
@@ -610,11 +634,8 @@ Allows reading from and writing to spreadsheets, effectively serving as a lightw
 ### google.oauth2.service_account
 Handles secure authentication with the Google Sheets API using a service account.
 
-### selenium
+### playwright
 Provides browser automation capabilities for scraping real estate listings.
-
-### webdriver-manager
-Automatically downloads and manages browser drivers (Chrome, Firefox, Edge), eliminating manual driver setup.
 
 ### pandas
 Used for data manipulation and analysis.  
@@ -636,34 +657,24 @@ Generates ASCII-art text for the application title displayed at startup.
 ### datetime
 Used to generate the current date for automatic worksheet naming.
 
-### sys
-Used to safely terminate the program if no supported browser is available.
-
 ---
 
-## Selenium Components
-
-### WebDriverWait & expected_conditions
-Used to ensure webpage elements load before scraping begins, improving reliability.
-
-### By
-Locates elements on a webpage using class names, tags, and other selectors.
-
-### ChromeService / FirefoxService / EdgeService
-Used to configure and launch specific browser drivers.
-
----
 
 ## Why These Libraries Were Chosen
 
-- **Selenium** enables dynamic website interaction where traditional HTTP requests are insufficient.
-- **Pandas & NumPy** provide powerful data analysis capabilities.
-- **Google Sheets API** removes the need for a traditional database while enabling persistent storage.
-- **webdriver-manager** simplifies environment setup and improves portability.
-- **gspread-formatting** enhances output presentation for better usability.
+- **Playwright** enables interaction with dynamic websites where traditional HTTP requests are insufficient, allowing JavaScript-rendered content to be scraped reliably. It was also chosen because it works well in cloud environments such as Heroku, where headless browsers are required.
+
+- **Pandas & NumPy** provide powerful data manipulation and statistical analysis tools used for cleaning listings, calculating price per square meter, removing outliers, and generating investment scores.
+
+- **Google Sheets API** (via gspread) acts as lightweight cloud storage, eliminating the need for a traditional database while allowing results to be easily viewed and shared.
+
+- **gspread-formatting** improves readability by formatting headers, freezing rows, and highlighting the most attractive investment opportunities.
 
 Together, these tools create a complete pipeline:
-Web scraping → Data processing → Statistical analysis → Cloud storage → Presentation.
+
+**Web scraping → Data cleaning → Statistical analysis → Investment ranking → Cloud storage → Presentation**
+
+
 
 
 # Agile Development Process
@@ -687,7 +698,7 @@ Tasks were organised into workflow stages such as:
 
 This approach ensured structured progress and clear visibility of development priorities.
 
-<img width="1908" height="881" alt="User story" src="https://github.com/user-attachments/assets/7962afa5-c8c9-467d-969e-2302fb3f3435">
+<img width="900" alt="User story" src="https://github.com/user-attachments/assets/7962afa5-c8c9-467d-969e-2302fb3f3435">
 
 ---
 
@@ -773,6 +784,73 @@ For detailed testing documentation, please refer to:
 
 <img width="900" alt="PEP8 clean" src="https://github.com/user-attachments/assets/3736527a-d7f8-4ce2-92e6-eda3b38007ca">
 
+
+## Manual Testing Documentation
+
+Defensive programming and application stability were manually tested using the following user acceptance tests.
+
+| Feature | Expectation | Test | Result |
+|--------|-------------|------|--------|
+| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* |
+| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* |
+| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | Program assigns default max price of **500,000,000 ₸** |
+| Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | Program runs normally and returns **"No listings found."** |
+| Slow page loading | Scraper should not crash when pages load slowly | Simulate slow page loading | Timeout protection stops scraping safely |
+| Page loading optimisation | Scraper should load pages efficiently | Load page using `domcontentloaded` | Pages load faster and scraper continues |
+| Scraper stability | Program should not crash if a page fails to load | Trigger a page timeout | Program prints **"Page failed to load, stopping scraper."** |
+| Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."** |
+| Duplicate listings | Listings should not appear multiple times | Scrape multiple pages | Duplicate entries removed using `drop_duplicates()` |
+| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets |
+
+---
+
+## Example Output
+
+After successful scraping and analysis, the program prints a **market summary and top investment opportunities**.
+
+Example console output:
+
+<img width="900" src="https://github.com/user-attachments/assets/e7fc7dd3-170d-4f4b-9f83-035a22f1a080">
+
+---
+
+<img width="900" src="https://github.com/user-attachments/assets/8e05657e-5926-4bcb-9e0a-7392e2a9e7ae">
+
+
+---
+
+<img width="900" src="https://github.com/user-attachments/assets/d907f10d-3bb2-4d1d-b3b1-2d0ca1383e62">
+
+
+## Bug fixing
+
+| Feature | Test | Result |
+|-------|------|------|
+| Chrome installation on Heroku | Checked `/app/.chrome-for-testing/` using `heroku run bash` | Chrome binaries detected |
+| Chromedriver installation | Checked `/app/.chrome-for-testing/chromedriver-linux64/` | Chromedriver detected |
+| Selenium browser startup | Ran the application via the web interface | Browser failed to start consistently on Heroku |
+| Scraper functionality | Attempted to load listing pages using Selenium | Selenium errors occurred in the cloud environment |
+| Data extraction | Tested scraping logic locally | Data extracted successfully |
+
+### Note
+
+During deployment testing, Selenium produced persistent issues on Heroku related to Chrome driver initialization.  
+Despite multiple fixes (buildpack configuration, driver paths, and headless settings), the issue could not be fully resolved in the Heroku environment.
+
+To ensure stable scraping in production, the scraping implementation was migrated from **Selenium to Playwright**, which provides better compatibility with headless browsers in cloud deployments.
+
+### Timeout Adjustments
+
+Heroku dynos run slower than a local machine. To ensure page content loads completely before scraping begins, the scraping timeouts were increased.
+
+```bash
+    page.goto(url, wait_until="domcontentloaded", timeout=60000)
+
+
+    page.wait_for_selector(".a-card", timeout=60000)
+```
+
+
 # Deployment
 
 This project was deployed using **Heroku**, a cloud Platform as a Service (PaaS) that allows developers to build, run, and operate applications entirely in the cloud.
@@ -785,7 +863,7 @@ The application scrapes real estate listings, analyzes investment opportunities 
 
 To deploy this application to Heroku, follow the steps below.
 
-### 1. Create a Heroku App
+## 1. Create a Heroku App
 
 1. Log in to your **Heroku account**.
 2. From the **Heroku Dashboard**, click **New** in the top-right corner.
@@ -796,7 +874,7 @@ To deploy this application to Heroku, follow the steps below.
 
 ---
 
-### 2. Configure Environment Variables
+## 2. Configure Environment Variables
 
 Navigate to:
 
@@ -808,17 +886,65 @@ Add the following variable:
 |-----|------|
 | PORT | 8000 |
 
-If using Google Sheets credentials, add them as well:
+If using Google Sheets integration, add your service account credentials as an environment variable:
 
 | KEY | VALUE |
 |-----|------|
-| CREDS_JSON | (paste the contents of your creds.json file) |
+| CREDS_JSON | *(paste the contents of your `creds.json` file)* |
 
-These credentials allow the application to securely access the **Google Sheets API**.
+The `CREDS_JSON` variable should contain the full JSON content of your **Google service account credentials file**.
+
+These credentials allow the application to securely authenticate with the **Google Sheets API** and write the analyzed data to the spreadsheet.
+
+⚠️ **Important:**  
+Never commit your `creds.json` file to a public repository. Environment variables are used to keep sensitive credentials secure when deploying the application.
 
 ---
 
-### 3. Add Buildpacks
+### Google Sheets Access
+
+The application writes results to the following spreadsheet:
+
+[Google spreadsheet](https://docs.google.com/spreadsheets/d/1LsCn1ZCsya1gHUvBHxhPOWLg6muRCamR4Mk9WYVjDYM)
+
+The sharing settings were intentionally configured to **"Anyone with the link – Viewer"** in order to simplify access for project reviewers and supervisors.
+
+This allows the spreadsheet results to be viewed without requiring a Google account while preventing unauthorized edits.
+
+⚠️ **Note:**  
+This access configuration is intended **only for supervision and project evaluation purposes**.
+
+Make sure the Google Sheet is **shared with the service account email** from the credentials file, otherwise the application will not be able to update the spreadsheet.
+
+---
+
+### Google API Credentials
+
+The application uses a **Google service account** to securely access the Google Sheets API.
+
+The credentials file (*creds.json*) contains authentication information that allows the application to write data to the spreadsheet.
+
+For security reasons, this file is not included in the repository.
+
+To run the project locally:
+
+- Create a **Google Cloud Project**.
+
+- Enable the **Google Sheets API**.
+
+- Create a **Service Account**.
+
+Download the credentials file and rename it to:
+
+```bash
+creds.json
+```
+Place the file in the **project root directory**.
+
+Share the Google Sheet with the service account email (Editor access).
+
+
+## 3. Add Buildpacks
 
 Heroku requires buildpacks to install dependencies and run the application.
 
@@ -827,7 +953,6 @@ Navigate to:
 `Settings → Buildpacks`
 
 Add the following buildpacks in this order:
-
 1. **Python**
 2. **Node.js**
 
@@ -835,7 +960,7 @@ The order is important because the Python backend must run before Node services.
 
 ---
 
-### 4. Required Deployment Files
+## 4. Required Deployment Files
 
 Heroku requires several files in the project repository to run properly.
 
@@ -881,7 +1006,7 @@ Example:
 
 ---
 
-### 5. Connect Heroku to GitHub
+## 5. Connect Heroku to GitHub
 
 From the **Deploy tab** in Heroku:
 
@@ -921,10 +1046,9 @@ Push the application:
 git push heroku main
 ```
 
-
 ---
 
-### 6. Application Deployment
+## 6. Application Deployment
 
 After deployment, Heroku will:
 
@@ -936,12 +1060,11 @@ The application will run inside a **web-based terminal interface**.
 
 ---
 
-### 7. Live Application
+## 7. Live Application
 
 The live deployed application can be accessed here:
 
 [Real Estate Analysis App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
-
 
 ---
 
@@ -959,7 +1082,8 @@ This ensures the scraper can run correctly in the cloud environment.
 
 To run Puppeteer on Heroku, additional system dependencies are required because Heroku does not include all the libraries needed for Chromium by default. The `puppeteer-heroku-buildpack` installs the required dependencies so Puppeteer can run correctly in the Heroku environment.
 
-### 1. Add the Puppeteer Buildpack
+
+## 8. Add the Puppeteer Buildpack
 
 Install the buildpack using the Heroku CLI:
 
@@ -1010,13 +1134,11 @@ The application will automatically create daily worksheets such as:
 
 
 
-
-
 No manual worksheet setup is required.
 
 ---
 
-## Google Cloud Platform Setup
+# Google Cloud Platform Setup
 
 You must create a **Service Account** and enable the required APIs.
 
@@ -1052,6 +1174,194 @@ Enable:
 5. Click **Create**
 6. Under Role, select:
 
+**Editor**
 
 
+7. Click **Continue**
+8. Click **Done**
 
+---
+
+### Step 4 — Generate the Credentials File
+
+1. Locate the newly created **Service Account** in the credentials list.
+2. Click on the service account name.
+3. Navigate to the **Keys** tab.
+4. Click **Add Key → Create New Key**.
+5. Select **JSON**.
+6. Click **Create**.
+
+A JSON file will be downloaded to your computer.
+
+---
+
+### Step 5 — Configure the Credentials File
+
+Rename the downloaded file to:
+
+**creds.json**
+
+Place the file in the **root directory of the project**.
+
+Example project structure:
+
+real-estate-analysis-app
+│
+├── main.py
+├── requirements.txt
+├── Procfile
+├── creds.json
+└── README.md
+
+
+---
+
+### Step 6 — Share the Google Sheet with the Service Account
+
+1. Open your **Google Sheet**.
+2. Click **Share**.
+3. Copy the **service account email** from the credentials file.
+4. Add it as a collaborator.
+5. Grant **Editor** access.
+
+This allows the application to write data to the spreadsheet using the **Google Sheets API**.
+
+
+# Local Development
+
+This project can be cloned or forked to create a local copy on your own machine for development and testing.
+
+Before running the project locally, ensure that all required dependencies are installed. These dependencies are listed in the **requirements.txt file**.
+
+To install them, run:
+
+```bash
+pip3 install -r requirements.txt
+```
+
+If the project uses environment variables or confidential credentials (such as **env.py**, **.env files**, **API keys**, or database configuration files), these must be created manually in your local environment. These files are typically excluded from the repository to protect sensitive information.
+
+Once dependencies are installed, the application can be run locally using the appropriate Python command depending on the project structure.
+
+## Cloning the Repository
+
+You can clone the repository by following these steps:
+
+1. Navigate to the GitHub repository.
+
+2. Click the green **Code** button near the top of the page.
+
+3. Choose your preferred method: **HTTPS, SSH**, or **GitHub CLI**.
+
+4. **Copy** the repository URL.
+
+5. Open **Git Bash** or your **terminal**.
+
+6. Navigate to the directory where you want to store the project.
+
+7. Run the following command:
+
+```bash
+git clone https://github.com/akashebaev-ux/real_estate_analysis_app.git
+```
+8. Press **Enter** to create your local clone.
+
+After cloning, move into the project directory and install the required dependencies.
+
+---
+
+## Forking the Repository
+
+Forking allows you to create your own copy of the repository so you can make changes without affecting the original project.
+
+To fork this repository:
+
+1. Log in to your **GitHub** account.
+
+2. Open the repository page.
+
+3. Click the **Fork** button in the top-right corner.
+
+4. GitHub will create a copy of the repository in your own account.
+
+You can then clone your forked version to your local machine and start working on the project.
+
+---
+
+## Local vs Deployed Version
+
+The local version of the application allows developers to test features and experiment with the code before deployment.
+
+The deployed version is hosted online and may include:
+
+- Production configuration settings
+
+- Environment variables
+
+- Performance optimizations
+
+While both versions should behave similarly, small differences may occur depending on the deployment environment or hosting platform.
+
+---
+
+
+# Credits
+
+## Content & Learning Resources
+
+| Source | Contribution |
+|------|------|
+| Python Documentation | Official reference for Python language features and libraries |
+| Pandas Documentation | Data manipulation and analysis techniques used for cleaning and processing listing data |
+| NumPy Documentation | Statistical calculations such as z-scores and numerical analysis |
+| Playwright Documentation | Guidance for browser automation and scraping dynamic web pages |
+| Google Sheets API Documentation | Integration for storing analysis results in cloud spreadsheets |
+| gspread Documentation | Python library used to interact with Google Sheets |
+| Stack Overflow | Troubleshooting programming issues and debugging techniques |
+| W3Schools | Reference material for Python concepts and syntax |
+| GeeksforGeeks | Programming explanations and examples used during development |
+
+---
+
+## Media & Data Sources
+
+| Source | Notes |
+|------|------|
+| Krisha.kz | Real estate listings used as the primary dataset for apartment market analysis |
+| Google Sheets | Cloud-based storage used for saving and viewing analyzed results |
+
+---
+
+## Tools & Development Environment
+
+| Tool | Purpose |
+|------|------|
+| Git | Version control system used for tracking project changes |
+| GitHub | Repository hosting and project management |
+| Visual Studio Code | Primary development environment |
+| Heroku | Cloud platform used to deploy and run the application |
+
+---
+
+## AI Assistance
+
+AI tools were used during development as **learning aids and development support**.
+
+### ChatGPT
+
+Used for:
+
+- Explaining some error messages  
+- Helping structure docstrings and README sections  
+
+AI assistance was used **as a learning support tool**, and all code written in the project was reviewed, understood, and implemented by the developer.
+
+---
+
+# Acknowledgements
+
+I would like to thank:
+
+- The open-source developer community for sharing knowledge and educational resources.  
+- Developers and contributors on platforms such as **Stack Overflow** for providing solutions and discussions that helped solve technical challenges.  
+- Educational materials and programming documentation that supported the development of this project.
