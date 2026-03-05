@@ -1,5 +1,5 @@
-import subprocess
 import gspread
+import time
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
@@ -216,6 +216,7 @@ def scrape_data(rooms_input):
                     continue
 
             page_num += 1
+            time.sleep(2)
 
         browser.close()
 
@@ -636,12 +637,6 @@ def main():
     6. Cleans and analyzes the data.
     7. Saves the results to Google Sheets.
     8. Prints a summary of the market and top investment options."""
-
-    subprocess.run(
-        ["playwright", "install", "chromium"],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
 
     country, city, rooms, location, price_input = get_user_input()
 
