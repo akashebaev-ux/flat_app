@@ -166,7 +166,11 @@ def scrape_data(rooms_input):
 
             print("Page", page_num)
 
-            page.goto(url)
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            except Exception:
+                print("Page failed to load, stopping scraper.")
+                break
 
             try:
                 page.wait_for_selector(".a-card", timeout=60000)
