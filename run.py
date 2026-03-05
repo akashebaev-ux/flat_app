@@ -1,6 +1,5 @@
 import subprocess
 import gspread
-import time
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
@@ -88,15 +87,14 @@ def parse_price(price_input):
     it defaults to 500 million. This ensures the program can continue running
     even if the user enters incorrect data.
     """
-# Budget conversion
+
     try:
         max_price = int(price_input)
     except Exception:
-        max_price = 500000000  # Default to 500 million if input is invalid
+        max_price = 500000000
 
     if max_price <= 0:
-        max_price = 500000000  # Default to 500 million if input is zero or
-        # negative
+        max_price = 500000000
     return max_price
 
 
@@ -118,7 +116,7 @@ def setup_google_sheets():
 
     today = datetime.now().strftime("%Y-%m-%d")
 
-    # Creates or opens a worksheet in Google Sheets named with today's date.
+    # Creates and opens a worksheet in Google Sheets named with today's date.
 
     try:
         ws = SHEET.worksheet(today)
@@ -197,7 +195,6 @@ def scrape_data(rooms_input):
                         ".a-card__subtitle"
                     ).inner_text()
 
-                    # 🟡 Small improvement for relative URLs
                     link = card.query_selector("a").get_attribute("href")
                     link = "https://krisha.kz" + link
 
@@ -217,7 +214,6 @@ def scrape_data(rooms_input):
                     continue
 
             page_num += 1
-            time.sleep(2)
 
         browser.close()
 
