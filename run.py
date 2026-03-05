@@ -636,7 +636,7 @@ def main():
     8. Prints a summary of the market and top investment options."""
 
     subprocess.run(
-        ["playwright", "install", "chromium"],
+        ["playwright", "install", "--with-deps", "chromium"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
     )
