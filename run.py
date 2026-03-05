@@ -169,7 +169,7 @@ def scrape_data(rooms_input):
             page.goto(url)
 
             try:
-                page.wait_for_selector(".a-card", timeout=10000)
+                page.wait_for_selector(".a-card", timeout=60000)
             except Exception:
                 print("No more pages.")
                 break
