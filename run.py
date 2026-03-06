@@ -486,6 +486,11 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # Sort listings by investment score in descending order, so
     # the best investment
     #  opportunities appear at the top of the DataFrame.
+
+    if df.empty:
+        print("No listings found.")
+        exit()
+
     return df
 
 
