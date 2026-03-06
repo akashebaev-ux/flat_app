@@ -67,6 +67,64 @@ The application automatically processes property listings using statistical anal
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Project Workflow](#project-workflow)
+
+- [Instructions](#instructions)
+  - [How to Use the App](#how-to-use-the-app)
+
+- [UX](#ux)
+  - [MVP](#mvp)
+  - [The 5 Planes of UX](#the-5-planes-of-ux)
+    - [Strategy](#1-strategy)
+    - [Scope](#2-scope)
+    - [Structure](#3-structure)
+    - [Skeleton](#4-skeleton)
+    - [Surface](#5-surface)
+
+- [User Stories](#user-stories)
+
+- [Features](#features-1)
+  - [Existing Features](#existing-features)
+  - [Future Features](#future-features)
+
+- [Tools & Technologies](#tools--technologies)
+
+- [Functions](#functions)
+
+- [Imports](#imports)
+
+- [Agile Development Process](#agile-development-process)
+  - [GitHub Projects](#github-projects)
+  - [GitHub Issues](#github-issues)
+  - [MoSCoW Prioritisation](#moscow-prioritisation)
+
+- [Testing](#testing)
+  - [Manual Testing Documentation](#manual-testing-documentation)
+
+- [Bug Fixing](#bug-fixing)
+
+- [Deployment](#deployment)
+  - [Heroku Deployment](#heroku-deployment)
+  - [Google Sheets API Setup](#google-sheets-api-setup)
+
+- [Local Development](#local-development)
+  - [Cloning the Repository](#cloning-the-repository)
+  - [Forking the Repository](#forking-the-repository)
+  - [Local vs Deployed Version](#local-vs-deployed-version)
+
+- [Credits](#credits)
+  - [Content & Learning Resources](#content--learning-resources)
+  - [Media & Data Sources](#media--data-sources)
+  - [Tools & Development Environment](#tools--development-environment)
+  - [AI Assistance](#ai-assistance)
+
+- [Acknowledgements](#acknowledgements)
+
+---
 
 # Instructions
 
