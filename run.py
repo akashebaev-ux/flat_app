@@ -1,4 +1,8 @@
 import subprocess
+# subprocess is used to run external commands from within
+# the Python script.
+# In this case, it's used to install the necessary Playwright
+# browser dependencies before running the scraper.
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
@@ -38,8 +42,10 @@ CENTER_KEYWORDS = [
 
 def get_user_input():
     """
-Collect user input for real estate search criteria.
-"""
+    Collect user input for real estate search criteria.
+    This function prompts the user to enter their preferences for:
+    - country"""
+
     print(figlet_format("Real Estate App"))
     print("Real Estate Analysis App")
     print("--------------------------------\n")
@@ -131,6 +137,11 @@ def setup_google_sheets():
 
 
 def scrape_data(rooms_input):
+    """Scrape real estate data from the website using Playwright.
+    It navigates through multiple pages of listings,
+    extracts relevant information.
+    The function handles potential loading issues and collects
+    data into a list for further processing."""
 
     all_data = []
     page_num = 1
