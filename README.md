@@ -24,49 +24,6 @@ The application automatically processes property listings using statistical anal
 
 ---
 
-## Features
-
-- Scrapes apartment listings from **Krisha.kz**
-- Filters listings by **number of rooms**
-- Optional filtering by **location or district**
-- Filters properties by **maximum budget**
-- Calculates **price per square meter**
-- Removes unrealistic listings using **statistical filtering**
-- Detects **undervalued properties**
-- Generates an **investment score**
-- Saves results to **Google Sheets**
-- Highlights the **top investment opportunities**
-
----
-
-## Project Workflow
-
-1. User enters search criteria:
-   - Country
-   - City
-   - Number of rooms
-   - Preferred location
-   - Maximum budget
-
-2. **Playwright** scrapes property listings from Krisha.kz.
-
-3. The data is cleaned and structured using **Pandas**.
-
-4. The application calculates:
-
-   - Apartment size (m²)
-   - Price per square meter
-   - Z-score (market deviation)
-   - Liquidity score
-   - Center location score
-   - Overall investment score
-
-5. Listings are ranked by **investment score**.
-
-6. Results are exported to **Google Sheets** where the best opportunities are highlighted.
-
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -123,6 +80,49 @@ The application automatically processes property listings using statistical anal
   - [AI Assistance](#ai-assistance)
 
 - [Acknowledgements](#acknowledgements)
+
+---
+
+## Features
+
+- Scrapes apartment listings from **Krisha.kz**
+- Filters listings by **number of rooms**
+- Optional filtering by **location or district**
+- Filters properties by **maximum budget**
+- Calculates **price per square meter**
+- Removes unrealistic listings using **statistical filtering**
+- Detects **undervalued properties**
+- Generates an **investment score**
+- Saves results to **Google Sheets**
+- Highlights the **top investment opportunities**
+
+---
+
+## Project Workflow
+
+1. User enters search criteria:
+   - Country
+   - City
+   - Number of rooms
+   - Preferred location
+   - Maximum budget
+
+2. **Playwright** scrapes property listings from Krisha.kz.
+
+3. The data is cleaned and structured using **Pandas**.
+
+4. The application calculates:
+
+   - Apartment size (m²)
+   - Price per square meter
+   - Z-score (market deviation)
+   - Liquidity score
+   - Center location score
+   - Overall investment score
+
+5. Listings are ranked by **investment score**.
+
+6. Results are exported to **Google Sheets** where the best opportunities are highlighted.
 
 ---
 
