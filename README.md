@@ -1,4 +1,7 @@
-#[Real_Estate_App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+# [Real_Estate_App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+
+---
+
 Developer: [Azamat Kashebayev](https://github.com/akashebaev-ux)
 ```text
 ██████╗ ███████╗ █████╗ ██╗          ███████╗███████╗████████╗ █████╗ ████████╗███████╗      
