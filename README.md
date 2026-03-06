@@ -185,6 +185,10 @@ Country
 
 - Budget
 
+
+<img width="900" src="https://github.com/user-attachments/assets/a95d2d94-43fe-4eda-b383-c007bdf421f1">
+
+
 Derived Content:
 
 - sqm
@@ -194,6 +198,7 @@ Derived Content:
 - z-score
 
 - investment_score
+  
 
 Output Content:
 
@@ -202,6 +207,11 @@ Output Content:
 - Market statistics
 
 - Investment opportunities
+
+
+<img width="900" src="https://github.com/user-attachments/assets/f660ee40-6369-4ad4-b7ec-fe1b25d8968e">
+
+
 
 **Constraints**
 
@@ -438,21 +448,21 @@ Displays:
 
 | Tool / Technology | Purpose |
 |-------------------|----------|
-| Python | Core programming language used to build the application |
-| Playwright | Automated web scraping and browser automation for extracting real estate listings |
-| Pandas | Data cleaning, transformation, and analysis of scraped property data |
-| NumPy | Statistical calculations and numerical analysis for investment scoring |
-| Google Sheets API | Cloud-based storage used to save analyzed real estate data |
-| gspread | Python library for interacting with Google Sheets (reading and writing data) |
-| gspread-formatting | Applies formatting such as bold headers, frozen rows, and highlighted results in Google Sheets |
-| google-auth | Handles authentication with Google APIs using a service account |
-| requests | HTTP library used by Google API integrations |
-| python-dotenv | Manages environment variables and configuration settings |
-| pyfiglet | Generates ASCII art titles for the console interface |
-| Regular Expressions (via Pandas) | Extracts structured data such as number of rooms and apartment size from listing text |
-| Git | Version control system used to track code changes |
-| GitHub | Platform for hosting the repository and project collaboration |
-| VS Code | Development environment used to write and run the code |
+| [Python](https://www.python.org/) | Core programming language used to build the application |
+| [Playwright](https://playwright.dev/) | Automated web scraping and browser automation for extracting real estate listings |
+| [Pandas](https://pandas.pydata.org/) | Data cleaning, transformation, and analysis of scraped property data |
+| [NumPy](https://numpy.org/) | Statistical calculations and numerical analysis for investment scoring |
+| [Google Sheets API](https://sheets.googleapis.com/) | Cloud-based storage used to save analyzed real estate data |
+| [gspread](https://docs.gspread.org/en/latest/) | Python library for interacting with Google Sheets (reading and writing data) |
+| [gspread-formatting](https://pypi.org/project/gspread-formatting/) | Applies formatting such as bold headers, frozen rows, and highlighted results in Google Sheets |
+| [google-auth](https://accounts.google.com/o/oauth2/v2/auth) | Handles authentication with Google APIs using a service account |
+| [requests](https://pypi.org/project/requests/) | HTTP library used by Google API integrations |
+| [python-dotenv](https://pypi.org/project/python-dotenv/) | Manages environment variables and configuration settings |
+| [pyfiglet](https://pypi.org/project/pyfiglet/) | Generates ASCII art titles for the console interface |
+| [Regular Expressions (via Pandas)](https://docs.python.org/3/library/re.html) | Extracts structured data such as number of rooms and apartment size from listing text |
+| [Git](https://git-scm.com/) | Version control system used to track code changes |
+| [GitHub](https://github.com/) | Platform for hosting the repository and project collaboration |
+| [VS Code](https://code.visualstudio.com/) | Development environment used to write and run the code |
 
 
 
@@ -791,8 +801,9 @@ Defensive programming and application stability were manually tested using the f
 
 | Feature | Expectation | Test | Result |
 |--------|-------------|------|--------|
-| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* |
-| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* |
+| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* <img width="200" height="100" src="https://github.com/user-attachments/assets/b08a9c59-44ec-4872-8de6-385f5908cae8">|
+| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* ![Uploading Only Almaty.png…]()
+ |
 | Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | Program assigns default max price of **500,000,000 ₸** |
 | Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | Program runs normally and returns **"No listings found."** |
 | Slow page loading | Scraper should not crash when pages load slowly | Simulate slow page loading | Timeout protection stops scraping safely |
