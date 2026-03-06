@@ -810,7 +810,7 @@ Defensive programming and application stability were manually tested using the f
 | Scraper stability | Program should not crash if a page fails to load | Trigger a page timeout | Program prints **"Page failed to load, stopping scraper."** |
 | Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."** <img width="300" src="https://github.com/user-attachments/assets/454e31d1-4201-4934-89a2-5b42b4ce7ea5">|
 | Duplicate listings | Listings should not appear multiple times | Scrape multiple pages | Duplicate entries removed using `drop_duplicates()` |
-| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets |
+| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets <img width="300" src="https://github.com/user-attachments/assets/e557e56a-b11b-48d0-9b49-6f6e314cf738">|
 
 ---
 
@@ -1140,7 +1140,7 @@ To run your own version of this project, you must create a Google Sheet.
 
 The application will automatically create daily worksheets such as:
 
-<img width="900" alt="Google Sheets 1+" src="https://github.com/user-attachments/assets/657ce919-b029-432e-87b2-06cdc0562164">
+<img width="900" src="https://github.com/user-attachments/assets/4d11edbc-5616-4228-b17f-bbfcf395f5b5">
 
 
 
