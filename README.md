@@ -867,6 +867,18 @@ Heroku dynos run slower than a local machine. To ensure page content loads compl
     page.wait_for_selector(".a-card", timeout=60000)
 ```
 
+### Playwright Browser Installation
+
+To ensure that the required browser is available in the deployment environment (such as Heroku), Chromium is installed automatically using Playwright during runtime.
+
+<img width="400" src="https://github.com/user-attachments/assets/508b429e-9ccf-41c4-a9ec-5e893ce45114">
+
+
+This command installs the **Chromium browser** required for Playwright to run the scraping process. The stdout and stderr outputs are redirected to DEVNULL to suppress installation logs and keep the console output clean.
+
+⚠️**Important note:** Installing Chromium during runtime may introduce a delay when the application starts. As a result, it can sometimes take **1–3 minutes** for the main ASCII-art text to appear while the browser installation and initialization process completes.
+
+---
 
 # Deployment
 
