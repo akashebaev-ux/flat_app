@@ -787,8 +787,15 @@ Testing included:
 - Google Sheets integration  
 - Error handling scenarios  
 
-For detailed testing documentation, please refer to:
+I validated all of my Python files using the recommended [PEP 8 CI Python Linter](https://pep8ci.herokuapp.com/).
+The initial validation revealed several errors, which are shown below.
+
+---
+
 <img width="900" alt="PEP8 end" src="https://github.com/user-attachments/assets/5144b68a-9ffe-42a7-b8ed-b73af7b87145">
+
+
+The validation process identified the following errors, which were then corrected:
 
 ---
 
