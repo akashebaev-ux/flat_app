@@ -186,7 +186,7 @@ Country
 - Budget
 
 
-<img width="900" src="https://github.com/user-attachments/assets/a95d2d94-43fe-4eda-b383-c007bdf421f1">
+<img width="600" src="https://github.com/user-attachments/assets/a95d2d94-43fe-4eda-b383-c007bdf421f1">
 
 
 Derived Content:
@@ -209,7 +209,7 @@ Output Content:
 - Investment opportunities
 
 
-<img width="900" src="https://github.com/user-attachments/assets/f660ee40-6369-4ad4-b7ec-fe1b25d8968e">
+<img width="600" src="https://github.com/user-attachments/assets/f660ee40-6369-4ad4-b7ec-fe1b25d8968e">
 
 
 
@@ -249,7 +249,7 @@ Exports results
 
 ## Flowchart
 
-<img width="900" height="1200" alt="real_estate_analysis" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617">
+<img width="600" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617">
 
 
 
@@ -269,7 +269,7 @@ Preferred district or location (optional):
 Enter your maximum budget (0 - 500000000):
 ```
 ---
-<img width="900" src="https://github.com/user-attachments/assets/6674821f-f979-4c25-8e77-d9b65e18cfa6">
+<img width="600" src="https://github.com/user-attachments/assets/6674821f-f979-4c25-8e77-d9b65e18cfa6">
 
 
 **Output Example**
@@ -801,10 +801,9 @@ Defensive programming and application stability were manually tested using the f
 
 | Feature | Expectation | Test | Result |
 |--------|-------------|------|--------|
-| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* <img width="200" height="100" src="https://github.com/user-attachments/assets/b08a9c59-44ec-4872-8de6-385f5908cae8">|
-| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* ![Uploading Only Almaty.png…]()
- |
-| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | Program assigns default max price of **500,000,000 ₸** |
+| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* <img width="300" src="https://github.com/user-attachments/assets/b08a9c59-44ec-4872-8de6-385f5908cae8">|
+| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* <img width="300" src="https://github.com/user-attachments/assets/563786d5-ce7d-452a-be80-fade1e33daf6">|
+| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | Program assigns default max price of **500,000,000 ₸** <img width="300" src="https://github.com/user-attachments/assets/ec121045-a767-428c-a910-8e0f778cf162">|
 | Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | Program runs normally and returns **"No listings found."** |
 | Slow page loading | Scraper should not crash when pages load slowly | Simulate slow page loading | Timeout protection stops scraping safely |
 | Page loading optimisation | Scraper should load pages efficiently | Load page using `domcontentloaded` | Pages load faster and scraper continues |
