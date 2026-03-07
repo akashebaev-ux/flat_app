@@ -1188,9 +1188,9 @@ To run Puppeteer on Heroku, additional system dependencies are required because 
 ## 8. Add the Puppeteer Buildpack
 
 Install the buildpack using the Heroku CLI:
-
-[heroku buildpacks:add](https://github.com/jontewks/puppeteer-heroku-buildpack)
-
+```bash
+# https://github.com/jontewks/puppeteer-heroku-buildpack
+```
 
 Alternatively, you can add it from the **Heroku Dashboard**:
 
@@ -1199,8 +1199,9 @@ Alternatively, you can add it from the **Heroku Dashboard**:
 3. Click **Add Buildpack**.
 4. Enter the following URL:
 
-[Puppeteer Heroku Buildpack](https://github.com/jontewks/puppeteer-heroku-buildpack)
-
+```bash
+# https://github.com/jontewks/puppeteer-heroku-buildpack
+```
 
 <img width="900" src="https://github.com/user-attachments/assets/bed68260-90df-4a75-834c-1734c39ba74d">
 
