@@ -1462,8 +1462,4 @@ AI assistance was used **as a learning support tool**, and all code written in t
 
 # Acknowledgements
 
-I would like to thank:
-
-- The open-source developer community for sharing knowledge and educational resources.  
-- Developers and contributors on platforms such as **Stack Overflow** for providing solutions and discussions that helped solve technical challenges.  
-- Educational materials and programming documentation that supported the development of this project.
+I would like to express my sincere gratitude to **Mrs. Julia Konovalova**, an excellent mentor and teacher. Her professionalism and dedication are truly world-class. Her guidance and pivotal remarks provided valuable direction and made a significant difference in improving the quality of my work.
