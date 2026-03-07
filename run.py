@@ -34,48 +34,111 @@ CENTER_KEYWORDS = [
     ]
 
 
+def get_valid_country():
+    """
+    This function prompts the user to enter a country
+    name and validates the input.
+    It ensures that only letters are allowed, the
+    length does not exceed 10 characters, and currently
+    only "Kazakhstan" is accepted. The user has up to 6
+    attempts to enter valid input, after which they can
+    choose to continue or exit the program.
+    """
+    attempts = 0
+    print("Enter the country (only Kazakhstan is available):")
+
+    while True:
+        country = input("> ").strip().lower()
+
+        if not country.isalpha():
+            print("Only letters allowed. No numbers or symbols.")
+            attempts += 1
+
+        elif len(country) > 10:
+            print("Maximum 10 letters allowed.")
+            attempts += 1
+
+        elif country != "kazakhstan":
+            print("Currently only Kazakhstan supported.")
+            print("Please type: kazakhstan")
+            attempts += 1
+
+        else:
+            return country
+
+        if attempts >= 6:
+            choice = input(
+                "Too many incorrect attempts. Continue anyway? (y/n): "
+            ).strip().lower()
+
+            if choice == "y":
+                return country
+            else:
+                print("Exiting program.")
+                exit()
+
+
+def get_valid_city():
+    """
+    This function prompts the user to enter a
+    city name and validates the input.
+    It ensures that only letters are allowed, the
+    length does not exceed 10 characters, and currently
+    only "Almaty" is accepted. The user has up to 6 attempts
+    to enter valid input, after which they can choose to
+    continue or exit the program.
+    """
+    attempts = 0
+    print("Enter the city (only Almaty is available):")
+
+    while True:
+        city = input("> ").strip().lower()
+
+        if not city.isalpha():
+            print("Only letters allowed. No numbers or symbols.")
+            attempts += 1
+
+        elif len(city) > 10:
+            print("Maximum 10 letters allowed.")
+            attempts += 1
+
+        elif city != "almaty":
+            print("Currently only Almaty supported.")
+            print("Please type: almaty")
+            attempts += 1
+
+        else:
+            return city
+
+        if attempts >= 6:
+            choice = input(
+                "Too many incorrect attempts. Continue anyway? (y/n): "
+            ).strip().lower()
+
+            if choice == "y":
+                return city
+            else:
+                print("Exiting program.")
+                exit()
+
+
 def get_user_input():
-    """
-    Collect user input for real estate search criteria.
-    This function prompts the user to enter their preferences for:
-    - country
-    - city
-    - number of rooms
-    - preferred location
-    - maximum budget
-    """
     print(f"""{figlet_format("Real Estate App")}
             Real Estate Analysis App
             --------------------------------
             This app helps you find the best real estate investment
-            opportunities in Almaty, Kazakhstan.""")
-    # The code above prints a stylized title for the app using pyfiglet,
-    # followed by a simple description and a separator line.
-    country = input(
-        "Enter the country (only Kazakhstan is available):\n"
-    ).strip().lower()
-    city = input(
-        "Enter the city (only Almaty is available):\n"
-    ).strip().lower()
-    rooms = input("Number of rooms desired (e.g., 2): \n").strip()
-    location = input("Preferred district or location (optional): \n").strip()
-    price = input("Enter your maximum budget (0-500000000): \n").strip()
-    # The code above collects user input for country, city, number of rooms,
-    # preferred location, and maximum budget.
+            opportunities in Almaty, Kazakhstan.
+            Please enter your search criteria below.
+            """)
+
+    country = get_valid_country()
+    city = get_valid_city()
+
+    rooms = input("Number of rooms desired (e.g., 2):\n").strip()
+    location = input("Preferred district or location (optional):\n").strip()
+    price = input("Enter your maximum budget (0-500000000):\n").strip()
+
     return country, city, rooms, location, price
-
-
-def validate_location(country, city):
-    """
-    Validate supported country and city.
-    Program exits if unsupported values are entered.
-    """
-    if country != "kazakhstan":
-        print("Currently only Kazakhstan supported.")
-        exit()
-    if city != "almaty":
-        print("Currently only Almaty supported.")
-        exit()
 
 
 def parse_price(price_input):
@@ -529,8 +592,7 @@ def main():
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
     )
-    country, city, rooms, location, price_input = get_user_input()
-    validate_location(country, city)
+    _, _, rooms, location, price_input = get_user_input()
     max_price = parse_price(price_input)
     ws = setup_google_sheets()
     data = scrape_data(rooms)
