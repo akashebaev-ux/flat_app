@@ -40,37 +40,30 @@ def get_valid_country():
     name and validates the input.
     It ensures that only letters are allowed, the
     length does not exceed 10 characters, and currently
-    only "Kazakhstan" is accepted. The user has up to 6
+    only "Kazakhstan" is accepted. The user has up to 3
     attempts to enter valid input, after which they can
     choose to continue or exit the program.
     """
     attempts = 0
     print("Enter the country (only Kazakhstan is available):")
-
     while True:
         country = input("> ").strip().lower()
-
         if not country.isalpha():
             print("Only letters allowed. No numbers or symbols.")
             attempts += 1
-
         elif len(country) > 10:
             print("Maximum 10 letters allowed.")
             attempts += 1
-
         elif country != "kazakhstan":
             print("Currently only Kazakhstan supported.")
             print("Please type: kazakhstan")
             attempts += 1
-
         else:
             return country
-
-        if attempts >= 6:
+        if attempts >= 3:
             choice = input(
                 "Too many incorrect attempts. Continue anyway? (y/n): "
             ).strip().lower()
-
             if choice == "y":
                 return country
             else:
@@ -84,39 +77,82 @@ def get_valid_city():
     city name and validates the input.
     It ensures that only letters are allowed, the
     length does not exceed 10 characters, and currently
-    only "Almaty" is accepted. The user has up to 6 attempts
+    only "Almaty" is accepted. The user has up to 3 attempts
     to enter valid input, after which they can choose to
     continue or exit the program.
     """
     attempts = 0
     print("Enter the city (only Almaty is available):")
-
     while True:
         city = input("> ").strip().lower()
-
         if not city.isalpha():
             print("Only letters allowed. No numbers or symbols.")
             attempts += 1
-
         elif len(city) > 10:
             print("Maximum 10 letters allowed.")
             attempts += 1
-
         elif city != "almaty":
             print("Currently only Almaty supported.")
             print("Please type: almaty")
             attempts += 1
-
         else:
             return city
-
-        if attempts >= 6:
+        if attempts >= 3:
             choice = input(
                 "Too many incorrect attempts. Continue anyway? (y/n): "
             ).strip().lower()
-
             if choice == "y":
                 return city
+            else:
+                print("Exiting program.")
+                exit()
+
+
+def get_valid_rooms():
+    """
+    This function prompts the user to enter the number of rooms
+    desired and validates the input.
+    It ensures that only numbers are allowed, the value is between
+    1 and 10, and the user has up to 3 attempts to enter valid input.
+    After 3 incorrect attempts, the user can choose to continue with
+    the last input or exit the program.
+    """
+    attempts = 0
+    print("Number of rooms desired (1-10):")
+    while True:
+        rooms = input("> ").strip()
+        if rooms == "":
+            print(
+                "Input cannot be empty. "
+                "Please enter a number between 1 and 10."
+            )
+            attempts += 1
+        elif not rooms.isdigit():
+            print(
+                "Only numbers are allowed. "
+                " Please enter a number between 1 and 10."
+            )
+            attempts += 1
+        elif int(rooms) == 0:
+            print(
+                "Number of rooms cannot be 0. "
+                "Please enter a number between 1 and 10."
+            )
+            attempts += 1
+        elif int(rooms) > 10:
+            print(
+                "Maximum number of rooms allowed is 10."
+                " Please enter a number between 1 and 10."
+            )
+            attempts += 1
+        else:
+            return rooms
+        if attempts >= 3:
+            choice = input(
+                "Too many incorrect attempts. Continue anyway? (y/n): "
+            ).strip().lower()
+            if choice == "y":
+                return rooms
             else:
                 print("Exiting program.")
                 exit()
@@ -130,14 +166,11 @@ def get_user_input():
             opportunities in Almaty, Kazakhstan.
             Please enter your search criteria below.
             """)
-
     country = get_valid_country()
     city = get_valid_city()
-
-    rooms = input("Number of rooms desired (e.g., 2):\n").strip()
+    rooms = get_valid_rooms()
     location = input("Preferred district or location (optional):\n").strip()
     price = input("Enter your maximum budget (0-500000000):\n").strip()
-
     return country, city, rooms, location, price
 
 
