@@ -27,6 +27,16 @@ A Python application that **scrapes apartment listings from Krisha.kz**, analyze
 
 The application automatically processes property listings using statistical analysis and exports the results to **Google Sheets** for easy viewing and tracking.
 
+
+---
+
+## Disclaimer:
+This project is developed **strictly for educational purposes** to demonstrate Python programming, library usage, API integration, and statistical data processing techniques. Any data parsing implemented in the application is **limited and used solely for demonstration within a learning context**.
+
+The application includes references and links to the original data sources. If requested by the website owners or content holders, the relevant functionality or content will be modified or removed.
+
+**Use of this application for commercial or non-educational purposes is prohibited.**
+
 ---
 
 ## Table of Contents
