@@ -1166,7 +1166,11 @@ The application will run inside a **web-based terminal interface**.
 
 The live deployed application can be accessed here:
 
-[Real Estate Analysis App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+[Real Estate Analysis App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/) 
+
+```
+https://real-estate-app-2026-9178939f4b7b.herokuapp.com/
+```
 
 ---
 
