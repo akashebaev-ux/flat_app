@@ -7,6 +7,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 from playwright.sync_api import sync_playwright
+from deep_translator import GoogleTranslator
 import pandas as pd
 import numpy as np
 # Pandas helps me organize and analyze my scraped data easier.
@@ -247,6 +248,18 @@ def get_user_input():
     return country, city, rooms, location, price
 
 
+def translate_text(text, target="en"):
+    """
+    Translate text to the target language using GoogleTranslator.
+    This function takes a string of text and translates it into the
+    specified target language (default is English).
+    """
+    try:
+        return GoogleTranslator(source='auto', target=target).translate(text)
+    except Exception:
+        return text
+
+
 def parse_price(price_input):
     """
     Parse and validate price input. Returns an integer or default value
@@ -378,7 +391,6 @@ def clean_data(all_data, rooms_input, location_input, max_price):
         columns=["header", "price", "location", "link", "combined_text"]
     )
     # It checks if DataFrame is empty after scraping.
-    # If no listings were found, print a message and exit.
     if df.empty:
         print("No listings found.")
         exit()
@@ -679,9 +691,11 @@ def print_results(df, ws):
     print("\n🔥 TOP INVESTMENT OPTIONS 🔥\n")
     TOP_N = min(3, len(df))
     for _, row in df.head(TOP_N).iterrows():
+        translated_header = translate_text(row["header"])
+        translated_location = translate_text(row["location"])
         print("\n------------\n")
-        print("Apartment:", row["header"])
-        print("Location:", row["location"])
+        print("Apartment:", translated_header)
+        print("Location:", translated_location)
         print("Price:", f"{row['price_clean']:,.0f} ₸")
         print("Size:", f"{row['sqm']:.1f} m²")
         print("Price per m²:", f"{row['price_per_m2']:,.0f} ₸")
