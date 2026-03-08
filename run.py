@@ -158,6 +158,32 @@ def get_valid_rooms():
                 exit()
 
 
+def get_valid_location():
+    """This function prompts the user to enter a preferred location
+    (center or outskirts) and validates the input.
+    It ensures that only "center" or "outskirts" are accepted, the
+    length does not exceed 9 characters, and the user has up to 3 attempts
+    to enter valid input. After 3 incorrect attempts, the user can choose
+    to continue with the last input or exit the program.
+    """
+    attempts = 3
+    while attempts > 0:
+        location = input(
+            "Preferred location (center / outskirts):\n"
+            "(only one word - center or outskirts allowed)\n"
+        ).strip().lower()
+        if len(location) > 9:
+            print("Error: Maximum length is 9 characters.")
+        elif location not in ["center", "outskirts"]:
+            print("Error: Only 'center' or 'outskirts' are allowed.")
+        else:
+            return location
+        attempts -= 1
+        print(f"Attempts left: {attempts}\n")
+    print("Too many invalid attempts. Program stopped.")
+    exit()
+
+
 def get_user_input():
     print(f"""{figlet_format("Real Estate App")}
             Real Estate Analysis App
@@ -169,7 +195,7 @@ def get_user_input():
     country = get_valid_country()
     city = get_valid_city()
     rooms = get_valid_rooms()
-    location = input("Preferred district or location (optional):\n").strip()
+    location = get_valid_location()
     price = input("Enter your maximum budget (0-500000000):\n").strip()
     return country, city, rooms, location, price
 
