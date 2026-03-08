@@ -23,6 +23,8 @@ from pyfiglet import figlet_format
 # CONSTANTS
 CITY_SLUG = "almaty"
 MAX_PAGES = 10
+MIN_DEFAULT = 20_000_000
+MAX_DEFAULT = 500_000_000
 # max_pages is set to 10 to limit the number of pages scraped.
 CENTER_KEYWORDS = [
     "Самал",
@@ -184,6 +186,51 @@ def get_valid_location():
     exit()
 
 
+def get_valid_price():
+    """
+    This function prompts the user to enter a budget for real estate
+    and validates the input.
+    It ensures that only numeric values are accepted. If the user enters a
+    value below the defined minimum (20 million KZT), it defaults to that
+    minimum. After 3 invalid attempts, the user can choose to continue
+    or exit the program.
+    """
+    attempts = 0
+    while True:
+        price = input(
+            "Enter your budget (between 20 million and 500 million KZT).\n"
+            f"Note: Any value below {MIN_DEFAULT} KZT "
+            f"will be set to the default minimum of {MIN_DEFAULT} KZT.\n"
+        ).strip()
+        if not price.isdigit():
+            attempts += 1
+            print("Only numbers are allowed.")
+            if attempts == 3:
+                choice = input(
+                    "You have entered invalid input 3 times.\n"
+                    "Do you want to continue? (y/n): "
+                ).strip().lower()
+                if choice == "n":
+                    print("Exiting program.")
+                    return None
+                attempts = 0  # reset attempts if continuing
+            continue
+        price = int(price)
+        if price < MIN_DEFAULT:
+            print(
+                f"Entered value is below the minimum.\n"
+                f"The default minimum of {MIN_DEFAULT} KZT will be used."
+            )
+            return MIN_DEFAULT
+        if price > MAX_DEFAULT:
+            print(
+                f"Entered value is above the maximum.\n"
+                f"The default maximum of {MAX_DEFAULT} KZT will be used."
+            )
+            return MAX_DEFAULT
+        return price
+
+
 def get_user_input():
     print(f"""{figlet_format("Real Estate App")}
             Real Estate Analysis App
@@ -196,7 +243,7 @@ def get_user_input():
     city = get_valid_city()
     rooms = get_valid_rooms()
     location = get_valid_location()
-    price = input("Enter your maximum budget (0-500000000):\n").strip()
+    price = get_valid_price()
     return country, city, rooms, location, price
 
 
