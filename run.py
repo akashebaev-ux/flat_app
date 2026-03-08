@@ -36,6 +36,28 @@ CENTER_KEYWORDS = [
     ]
 
 
+def handle_attempts(attempts, last_value):
+    """
+    Handles behavior after 3 incorrect attempts.
+     If the user has made 3 incorrect attempts, they are prompted
+     to either continue with the last entered value or exit the program.
+     This function returns the last entered value if the user chooses
+     to continue, or exits the program if they choose to exit.
+     If the number of attempts is less than 3, it simply returns None
+     to allow the user to keep trying.
+     """
+    if attempts >= 3:
+        choice = input(
+            "Too many incorrect attempts. Continue anyway? (y/n): "
+        ).strip().lower()
+        if choice == "y":
+            return last_value
+        else:
+            print("Exiting program.")
+            exit()
+    return None
+
+
 def get_valid_country():
     """
     This function prompts the user to enter a country
@@ -62,15 +84,9 @@ def get_valid_country():
             attempts += 1
         else:
             return country
-        if attempts >= 3:
-            choice = input(
-                "Too many incorrect attempts. Continue anyway? (y/n): "
-            ).strip().lower()
-            if choice == "y":
-                return country
-            else:
-                print("Exiting program.")
-                exit()
+        result = handle_attempts(attempts, country)
+        if result is not None:
+            return result
 
 
 def get_valid_city():
@@ -99,15 +115,9 @@ def get_valid_city():
             attempts += 1
         else:
             return city
-        if attempts >= 3:
-            choice = input(
-                "Too many incorrect attempts. Continue anyway? (y/n): "
-            ).strip().lower()
-            if choice == "y":
-                return city
-            else:
-                print("Exiting program.")
-                exit()
+        result = handle_attempts(attempts, city)
+        if result is not None:
+            return result
 
 
 def get_valid_rooms():
@@ -132,68 +142,49 @@ def get_valid_rooms():
         elif not rooms.isdigit():
             print(
                 "Only numbers are allowed. "
-                " Please enter a number between 1 and 10."
-            )
-            attempts += 1
-        elif int(rooms) == 0:
-            print(
-                "Number of rooms cannot be 0. "
                 "Please enter a number between 1 and 10."
             )
             attempts += 1
-        elif int(rooms) > 10:
-            print(
-                "Maximum number of rooms allowed is 10."
-                " Please enter a number between 1 and 10."
-            )
-            attempts += 1
         else:
-            return rooms
-        if attempts >= 3:
-            choice = input(
-                "Too many incorrect attempts. Continue anyway? (y/n): "
-            ).strip().lower()
-            if choice == "y":
-                return rooms
+            rooms = int(rooms)
+            if not 1 <= rooms <= 10:
+                print(
+                    "Maximum number of rooms allowed is 10."
+                    "Please enter a number between 1 and 10."
+                )
+                attempts += 1
             else:
-                print("Exiting program.")
-                exit()
+                return rooms
+        result = handle_attempts(attempts, rooms)
+        if result is not None:
+            return result
 
 
 def get_valid_location():
-    """This function prompts the user to enter a preferred location
+    """
+    This function prompts the user to enter a preferred location
     (center or outskirts) and validates the input.
     It ensures that only "center" or "outskirts" are accepted, the
-    length does not exceed 9 characters, and the user has up to 3 attempts
+    length does not exceed 10 characters, and the user has up to 3 attempts
     to enter valid input. After 3 incorrect attempts, the user can choose
     to continue with the last input or exit the program.
     """
     attempts = 3
-    while attempts > 0:
-        location = input(
-            "Preferred location (center / outskirts):\n"
-            "(only one word - center or outskirts allowed)\n"
-        ).strip().lower()
-        last_input = location
-        if len(location) > 9:
-            print("Error: Maximum length is 9 characters.")
+    print("Preferred location (center / outskirts):\n"
+          "(only one word - center or outskirts allowed)")
+    while True:
+        location = input("> ").strip().lower()
+        if not location.isalpha():
+            print("Only letters allowed. No numbers or symbols.")
+        elif len(location) > 10:
+            print("Error: Maximum length is 10 characters.")
         elif location not in ["center", "outskirts"]:
             print("Error: Only 'center' or 'outskirts' are allowed.")
         else:
             return location
-        attempts -= 1
-        print(f"Attempts left: {attempts}\n")
-    choice = input(
-        "Too many incorrect attempts. Continue anyway? (y/n): "
-    ).strip().lower()
-    if choice == "y":
-        return last_input
-    elif choice == "n":
-        print("Exiting program.")
-        exit()
-    else:
-        print("The program exited due to incorrect input.")
-    exit()
+        result = handle_attempts(attempts, location)
+        if result is not None:
+            return result
 
 
 def get_valid_price():
@@ -213,17 +204,11 @@ def get_valid_price():
             f"will be set to the default minimum of {MIN_DEFAULT} KZT.\n"
         ).strip()
         if not price.isdigit():
-            attempts += 1
             print("Only numbers are allowed.")
-            if attempts == 3:
-                choice = input(
-                    "You have entered invalid input 3 times.\n"
-                    "Do you want to continue? (y/n): "
-                ).strip().lower()
-                if choice == "n":
-                    print("Exiting program.")
-                    return None
-                attempts = 0  # reset attempts if continuing
+            attempts += 1
+            result = handle_attempts(attempts, None)
+            if result is not None:
+                return result
             continue
         price = int(price)
         if price < MIN_DEFAULT:
