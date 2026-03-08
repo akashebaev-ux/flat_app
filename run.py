@@ -680,7 +680,7 @@ def print_results(df, ws):
     TOP_N = min(3, len(df))
     for _, row in df.head(TOP_N).iterrows():
         print("\n------------\n")
-        print("Header:", row["header"])
+        print("Apartment:", row["header"])
         print("Location:", row["location"])
         print("Price:", f"{row['price_clean']:,.0f} ₸")
         print("Size:", f"{row['sqm']:.1f} m²")
@@ -722,4 +722,16 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
+        choice = input(
+            "\nDo you want to run the program again? (y/n): "
+            ).strip().lower()
+        if choice == "y":
+            continue
+        elif choice == "n":
+            print("Program finished. Goodbye!")
+            break
+        else:
+            print("Invalid input. Exiting program.")
+            break
