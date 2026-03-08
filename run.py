@@ -227,6 +227,11 @@ def get_valid_price():
 
 
 def get_user_input():
+    """
+    Collect and validate user input for real estate search criteria.
+    This function prompts the user to enter their preferences for country,
+    city, number of rooms, preferred location, and budget.
+    """
     print(f"""{figlet_format("Real Estate App")}
             Real Estate Analysis App
             --------------------------------
