@@ -399,7 +399,6 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # errors="coerce" converts non-numeric values to NaN, which is useful
     # for filtering later.
     if rooms_input:
-
         df = df[
             df["rooms"] == int(rooms_input)
         ]
@@ -412,11 +411,22 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # contains the entered text.
     # The comparison is case-insensitive and ignores
     # missing values.
-    if location_input:
+    if location_input == "center":
         df = df[
-            df["location"].str.lower().str.contains(
-                location_input.lower(),
-                na=False
+            df["location"].apply(
+                lambda x: any(
+                    k.lower() in x.lower()
+                    for k in CENTER_KEYWORDS
+                )
+            )
+        ]
+    elif location_input == "outskirts":
+        df = df[
+            ~df["location"].apply(
+                lambda x: any(
+                    k.lower() in x.lower()
+                    for k in CENTER_KEYWORDS
+                )
             )
         ]
     # Clean and convert price data.
@@ -461,7 +471,6 @@ def clean_data(all_data, rooms_input, location_input, max_price):
     # \s? - optional whitespace
     # [mм]- Latin m or Russian м
     # ² - square meters symbol
-
     df["sqm"] = pd.to_numeric(
         df["sqm"],
         errors="coerce"
