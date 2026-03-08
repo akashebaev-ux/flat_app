@@ -147,31 +147,33 @@ The application includes references and links to the original data sources. If r
 
 Run the program:
 
-```bash
-python main.py
-```
+[Real_Estate_App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+
+Please be patient. The program may take **1–3 minutes** to process all calculations, depending on your Internet speed.
 
 You will be asked to enter:
 
 - Country
 
+<img width="600" src="https://github.com/user-attachments/assets/b45ca05a-cf98-4c9c-87a4-db1073e2704f">
+
 - City
 
-- Number of rooms
+<img width="600" src="https://github.com/user-attachments/assets/18435666-cc5a-4554-aee3-b6359a9f2fcb">
 
-- Preferred location (optional)
+- Number of rooms (1-10)
 
-- Maximum budget
+<img width="600" src="https://github.com/user-attachments/assets/02aa55d4-d6aa-499a-b8ce-96e4ac69158b">
+  
+- Preferred location (center or outskirts)
 
-Example:
+<img width="600" src="https://github.com/user-attachments/assets/fd5e6ba5-4871-42c6-a006-4b85b60765ff">
 
-```text
-Enter country: Kazakhstan
-Enter city: Almaty
-Rooms: 2
-Location: Samal
-Budget: 40000000
-```
+- Budget
+
+<img width="600" src="https://github.com/user-attachments/assets/d9180077-e7fc-41ab-a1ce-bef50d2573c1">
+
+
 
 The program will:
 
@@ -183,7 +185,9 @@ The program will:
 
 4. Rank investment opportunities
 
-5. Export results
+5. Translate the three best investment opportunities into English.
+
+6. Export results
 
 
 # UX
@@ -200,6 +204,8 @@ A command-line real estate analysis tool that:
 - Calculates investment metrics
 
 - Identifies undervalued apartments
+
+- Translates the three best investment opportunities into English.
 
 - Saves results to Google Sheets
 
