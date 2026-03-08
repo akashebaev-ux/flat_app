@@ -42,32 +42,37 @@ The application includes references and links to the original data sources. If r
 ## Table of Contents
 
 - [Overview](#overview)
+- [Disclaimer](#disclaimer)
+
 - [Features](#features)
 - [Project Workflow](#project-workflow)
 
 - [Instructions](#instructions)
   - [How to Use the App](#how-to-use-the-app)
 
-- [UX](#ux)
+- [UX Design](#ux-design)
   - [MVP](#mvp)
   - [The 5 Planes of UX](#the-5-planes-of-ux)
     - [Strategy](#1-strategy)
     - [Scope](#2-scope)
     - [Structure](#3-structure)
+      - [User Flow](#user-flow)
+      - [Flowchart](#flowchart)
     - [Skeleton](#4-skeleton)
     - [Surface](#5-surface)
 
 - [User Stories](#user-stories)
 
-- [Features](#features-1)
-  - [Existing Features](#existing-features)
-  - [Future Features](#future-features)
+- [Future Features](#future-features)
 
 - [Tools & Technologies](#tools--technologies)
 
 - [Functions](#functions)
 
 - [Imports](#imports)
+  - [Core Dependencies](#core-dependencies)
+  - [Standard Library](#standard-library)
+  - [Why These Libraries Were Chosen](#why-these-libraries-were-chosen)
 
 - [Agile Development Process](#agile-development-process)
   - [GitHub Projects](#github-projects)
@@ -76,12 +81,14 @@ The application includes references and links to the original data sources. If r
 
 - [Testing](#testing)
   - [Manual Testing Documentation](#manual-testing-documentation)
+  - [Example Output](#example-output)
 
 - [Bug Fixing](#bug-fixing)
 
 - [Deployment](#deployment)
   - [Heroku Deployment](#heroku-deployment)
   - [Google Sheets API Setup](#google-sheets-api-setup)
+  - [Google Cloud Platform Setup](#google-cloud-platform-setup)
 
 - [Local Development](#local-development)
   - [Cloning the Repository](#cloning-the-repository)
