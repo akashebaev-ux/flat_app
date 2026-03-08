@@ -317,7 +317,7 @@ def scrape_data(rooms_input):
                     f"https://krisha.kz/prodazha/kvartiry/{CITY_SLUG}/"
                     f"?page={page_num}"
                 )
-            print("Page", page_num)
+            print("Currently parsing page", page_num)
             try:
                 page.goto(url, wait_until="domcontentloaded", timeout=60000)
             except Exception:
