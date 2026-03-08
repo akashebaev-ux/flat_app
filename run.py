@@ -174,6 +174,7 @@ def get_valid_location():
             "Preferred location (center / outskirts):\n"
             "(only one word - center or outskirts allowed)\n"
         ).strip().lower()
+        last_input = location
         if len(location) > 9:
             print("Error: Maximum length is 9 characters.")
         elif location not in ["center", "outskirts"]:
@@ -182,7 +183,16 @@ def get_valid_location():
             return location
         attempts -= 1
         print(f"Attempts left: {attempts}\n")
-    print("Too many invalid attempts. Program stopped.")
+    choice = input(
+        "Too many incorrect attempts. Continue anyway? (y/n): "
+    ).strip().lower()
+    if choice == "y":
+        return last_input
+    elif choice == "n":
+        print("Exiting program.")
+        exit()
+    else:
+        print("The program exited due to incorrect input.")
     exit()
 
 
