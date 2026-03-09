@@ -170,7 +170,7 @@ def get_valid_location():
     to enter valid input. After 3 incorrect attempts, the user can choose
     to continue with the last input or exit the program.
     """
-    attempts = 3
+    attempts = 0
     print("Preferred location (center / outskirts):\n"
           "(only one word - center or outskirts allowed)")
     while True:
@@ -608,7 +608,7 @@ def save_to_sheets(df, ws):
     and investment score.
     """
     ws.clear()
-    # Removes old data.
+    # Clear worksheet to avoid mixing previous runs with new results
     ws.append_row([
         "header", "price", "location", "link",
         "sqm", "price_per_m2",
