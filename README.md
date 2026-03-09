@@ -1123,7 +1123,7 @@ After successful scraping and analysis, the program prints a **market summary an
 
 Example console output:
 
-<img width="900" src="https://github.com/user-attachments/assets/e7fc7dd3-170d-4f4b-9f83-035a22f1a080">
+<img width="900" src="https://github.com/user-attachments/assets/d1c70a52-6461-4745-8de3-b3e93f9b55e0">
 
 ---
 
