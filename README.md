@@ -452,6 +452,7 @@ Features:
 | [Git](https://git-scm.com/) | Version control system used to track code changes |
 | [GitHub](https://github.com/) | Platform for hosting the repository and project collaboration |
 | [VS Code](https://code.visualstudio.com/) | Development environment used to write and run the code |
+| [Deep-translator](https://pypi.org/project/deep-translator/) | Used to translate listing titles and locations into English for improved readability |
 
 
 
