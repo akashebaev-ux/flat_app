@@ -59,7 +59,6 @@ The application includes references and links to the original data sources. If r
     - [Strategy](#1-strategy)
     - [Scope](#2-scope)
     - [Structure](#3-structure)
-      - [User Flow](#user-flow)
       - [Flowchart](#flowchart)
     - [Skeleton](#4-skeleton)
     - [Surface](#5-surface)
@@ -1053,9 +1052,12 @@ Example console output:
 | Scraper functionality | Attempted to load listing pages using Selenium | Selenium errors occurred in the cloud environment |
 | Data extraction | Tested scraping logic locally | Data extracted successfully |
 
+
+More information about the bug fixes and validation is available at the link: [TESTING.md](https://github.com/akashebaev-ux/real_estate_analysis_app/blob/main/TESTING.md).
+
 ### Note
 
-During deployment testing, Selenium produced persistent issues on Heroku related to Chrome driver initialization.  
+During deployment testing, **Selenium** produced persistent issues on **Heroku related** to Chrome driver initialization.  
 Despite multiple fixes (buildpack configuration, driver paths, and headless settings), the issue could not be fully resolved in the Heroku environment.
 
 To ensure stable scraping in production, the scraping implementation was migrated from **Selenium to Playwright**, which provides better compatibility with headless browsers in cloud deployments.
@@ -1442,7 +1444,6 @@ Place the file in the **root directory of the project**.
 Example project structure:
 
 real-estate-analysis-app
-│
 ├── main.py
 ├── requirements.txt
 ├── Procfile
