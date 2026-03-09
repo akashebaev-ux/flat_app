@@ -808,7 +808,7 @@ After execution, the user can choose to:
 
 ## Imports
 
-The following libraries are used in the project.
+The following libraries are used in the project - [links](## Tools & Technologies). 
 
 ### Core Dependencies
 
