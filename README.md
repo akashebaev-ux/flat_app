@@ -1127,7 +1127,7 @@ Example console output:
 
 ---
 
-<img width="900" src="https://github.com/user-attachments/assets/8e05657e-5926-4bcb-9e0a-7392e2a9e7ae">
+<img width="900" src="https://github.com/user-attachments/assets/ad655150-856d-45e2-b2a7-ec069d02e99f">
 
 
 ---
