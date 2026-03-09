@@ -42,32 +42,37 @@ The application includes references and links to the original data sources. If r
 ## Table of Contents
 
 - [Overview](#overview)
+- [Disclaimer](#disclaimer)
+
 - [Features](#features)
 - [Project Workflow](#project-workflow)
 
 - [Instructions](#instructions)
   - [How to Use the App](#how-to-use-the-app)
 
-- [UX](#ux)
+- [UX Design](#ux-design)
   - [MVP](#mvp)
   - [The 5 Planes of UX](#the-5-planes-of-ux)
     - [Strategy](#1-strategy)
     - [Scope](#2-scope)
     - [Structure](#3-structure)
+      - [User Flow](#user-flow)
+      - [Flowchart](#flowchart)
     - [Skeleton](#4-skeleton)
     - [Surface](#5-surface)
 
 - [User Stories](#user-stories)
 
-- [Features](#features-1)
-  - [Existing Features](#existing-features)
-  - [Future Features](#future-features)
+- [Future Features](#future-features)
 
 - [Tools & Technologies](#tools--technologies)
 
 - [Functions](#functions)
 
 - [Imports](#imports)
+  - [Core Dependencies](#core-dependencies)
+  - [Standard Library](#standard-library)
+  - [Why These Libraries Were Chosen](#why-these-libraries-were-chosen)
 
 - [Agile Development Process](#agile-development-process)
   - [GitHub Projects](#github-projects)
@@ -76,12 +81,14 @@ The application includes references and links to the original data sources. If r
 
 - [Testing](#testing)
   - [Manual Testing Documentation](#manual-testing-documentation)
+  - [Example Output](#example-output)
 
 - [Bug Fixing](#bug-fixing)
 
 - [Deployment](#deployment)
   - [Heroku Deployment](#heroku-deployment)
   - [Google Sheets API Setup](#google-sheets-api-setup)
+  - [Google Cloud Platform Setup](#google-cloud-platform-setup)
 
 - [Local Development](#local-development)
   - [Cloning the Repository](#cloning-the-repository)
@@ -145,11 +152,13 @@ The application includes references and links to the original data sources. If r
 
 **How to Use the App**
 
-Run the program:
+Open the application by clicking the link [Real_Estate_App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/) or by copying the URL and pasting it into your browser's address bar.
 
-```bash
-python main.py
 ```
+https://real-estate-app-2026-9178939f4b7b.herokuapp.com/
+```
+
+Please be patient. The program may take **1–3 minutes** to process all calculations, depending on your Internet speed.
 
 You will be asked to enter:
 
@@ -157,21 +166,12 @@ You will be asked to enter:
 
 - City
 
-- Number of rooms
+- Number of rooms (1-10)
+  
+- Preferred location (center or outskirts)
 
-- Preferred location (optional)
+- Budget
 
-- Maximum budget
-
-Example:
-
-```text
-Enter country: Kazakhstan
-Enter city: Almaty
-Rooms: 2
-Location: Samal
-Budget: 40000000
-```
 
 The program will:
 
@@ -183,7 +183,14 @@ The program will:
 
 4. Rank investment opportunities
 
-5. Export results
+5. Translate the three best investment opportunities into English.
+
+6. Export results
+  
+   **Note:** Please wait while the system calculates the parameters.
+
+   <img width="600" alt="Untitled design" src="https://github.com/user-attachments/assets/a3c2b6a9-9932-4d67-9fa0-49fd3e00e859">
+
 
 
 # UX
@@ -200,6 +207,8 @@ A command-line real estate analysis tool that:
 - Calculates investment metrics
 
 - Identifies undervalued apartments
+
+- Translates the three best investment opportunities into English.
 
 - Saves results to Google Sheets
 
@@ -248,53 +257,122 @@ Provide automated real estate market analysis.
 
 Input Content:
 
-Country
+- Country
+
+<img width="600" src="https://github.com/user-attachments/assets/b45ca05a-cf98-4c9c-87a4-db1073e2704f">
 
 - City
 
-- Rooms
+<img width="600" src="https://github.com/user-attachments/assets/18435666-cc5a-4554-aee3-b6359a9f2fcb">
 
-- Location
+- Number of rooms (1-10)
+
+<img width="600" src="https://github.com/user-attachments/assets/02aa55d4-d6aa-499a-b8ce-96e4ac69158b">
+  
+- Preferred location (center or outskirts)
+
+<img width="600" src="https://github.com/user-attachments/assets/fd5e6ba5-4871-42c6-a006-4b85b60765ff">
 
 - Budget
 
+<img width="600" src="https://github.com/user-attachments/assets/d9180077-e7fc-41ab-a1ce-bef50d2573c1">
 
-<img width="600" src="https://github.com/user-attachments/assets/a95d2d94-43fe-4eda-b383-c007bdf421f1">
+**Input Validation**
+
+Ensures:
+
+- Country supported
+
+- City supported
+
+- Budget numeric
+
+**Web Scraper**
+
+Uses Playwright to scrape:
+
+- Title
+- Description
+- Price
+- Location
+- Link
+
+**Data Cleaning**
+
+- Remove duplicates
+- Clean price values
+- Extract sqm
+- Extract rooms
 
 
-Derived Content:
+**Outlier Filtering**
 
-- sqm
+- Uses IQR method to remove unrealistic prices.
+
+**Google Sheets Export**
+
+Exports:
+- Listings
+- Metrics
+- Scores
+
+**Spreadsheet Formatting**
+
+- Bold headers
+- Frozen header row
+- Highlight top investments
+
+**Market Summary**
+
+Displays:
+- Average price
+- Average sqm
+- Average price per m²
+
+
+**Investment Metrics**
+
+Calculates:
 
 - price_per_m2
-
-- z-score
-
+- z_score
+- liquidity_score
+- center_score
 - investment_score
+
+<img width="600" src="https://github.com/user-attachments/assets/64d2bd8c-f004-47d1-ae6b-3f46563cd569">
+
+
+**Market Summary**
+
+Displays:
+- Average price
+- Average sqm
+- Average price per m²
+
+
+<img width="350" src="https://github.com/user-attachments/assets/278eb1f1-e275-44e6-9ec5-bda0ef76bf88">
+
+
+
+## Future Features
+
+**Multiple Cities**
+
+- Search multiple cities and countries.
+
+**Multiple Websites**
+
+- Scrape multiple real estate websites.
+
+**AI Image Analysis**
+
+- Analyze apartment images.
+
+**District Statistics**
+
+- Analyze districts separately.
   
-
-Output Content:
-
-- Ranked apartments
-
-- Market statistics
-
-- Investment opportunities
-
-
-<img width="600" src="https://github.com/user-attachments/assets/f660ee40-6369-4ad4-b7ec-fe1b25d8968e">
-
-
-
-**Constraints**
-
-- Currently supports Kazakhstan only
-
-- Currently supports Almaty only
-
-- Scrapes krisha.kz
-
-- Command-line interface
 
 ## 3. Structure
 
@@ -333,37 +411,16 @@ Exports results
 Simple command-line interface:
 
 ```bash
-$ python main.py
+$ python run.py
 
 Enter the country (only Kazakhstan is available):
 Enter the city (only Almaty is available):
-Number of rooms desired (e.g., 2):
-Preferred district or location (optional):
-Enter your maximum budget (0 - 500000000):
+Number of rooms desired (1-10):
+Preferred location (center / outskirts):
+Enter your budget (20000000 - 500000000):
 ```
 ---
-<img width="600" src="https://github.com/user-attachments/assets/6674821f-f979-4c25-8e77-d9b65e18cfa6">
 
-
-**Output Example**
-
-```bash
-MARKET SUMMARY
-
-Average price: 38,200,000 ₸
-Average size: 58.4 m²
-Average price per m²: 653,000 ₸
-
-
-TOP INVESTMENT OPTIONS
-
-Header: 2-ком квартира
-Location: Самал
-Price: 32,000,000 ₸
-Size: 60 m²
-Price per m²: 533,000 ₸
-Link: https://...
-```
 
 ## 5. Surface
 **Visual Design**
@@ -403,120 +460,6 @@ Features:
 | As a user | I want the application to analyze apartment images and district-level market statistics so that I can better evaluate investment opportunities | - Collect apartment images<br>- Implement AI image analysis<br>- Detect apartment features from images | Images can be processed by AI<br>Apartment features can be extracted from images<br>Results improve investment analysis |<img width="100" height="50" src="https://github.com/user-attachments/assets/08a75d02-ba3d-47f2-a3bc-19bb0b7ecc02">|
 
 
-# Features
-**Existing Features**
-**User Input**
-
-Collects:
-
-- Country
-
-- City
-
-- Rooms
-
-- Location
-
-- Budget
-
-**Input Validation**
-
-Ensures:
-
-- Country supported
-
-- City supported
-
-- Budget numeric
-
-**Web Scraper**
-
-Uses Playwright to scrape:
-
-- Title
-
-- Price
-
-- Location
-
-- Link
-
-- Description
-
-**Data Cleaning**
-
-- Remove duplicates
-
-- Clean price values
-
-- Extract sqm
-
-- Extract rooms
-
-**Investment Metrics**
-
-Calculates:
-
-- price_per_m2
-
-- z_score
-
-- liquidity_score
-
-- center_score
-
-- investment_score
-
-**Outlier Filtering**
-
-- Uses IQR method to remove unrealistic prices.
-
-**Google Sheets Export**
-
-Exports:
-
-- Listings
-
-- Metrics
-
-- Scores
-
-**Spreadsheet Formatting**
-
-- Bold headers
-
-- Frozen header row
-
-- Highlight top investments
-
-**Market Summary**
-
-Displays:
-
-- Average price
-
-- Average sqm
-
-- Average price per m²
-
-## Future Features
-
-**Multiple Cities**
-
-- Search multiple cities and countries.
-
-**Multiple Websites**
-
-- Scrape multiple real estate websites.
-
-**AI Image Analysis**
-
-- Analyze apartment images.
-
-**District Statistics**
-
-- Analyze districts separately.
-
 ## Tools & Technologies
 
 | Tool / Technology | Purpose |
@@ -541,222 +484,505 @@ Displays:
 
 # Functions
 
-The primary functions used in the Real Estate Analysis App are:
+The Real Estate Analysis App is organized into modular functions responsible for user input validation, data scraping, data analysis, and result presentation.
 
 ---
 
-## get_user_input()
+### handle_attempts(attempts, last_value)
 
-Collects search parameters from the user.
+Handles behavior after multiple invalid input attempts.
 
-Prompts for:
+If the user reaches **3 incorrect attempts**, they are asked whether to continue or exit.
 
-- Country  
-- City  
-- Number of rooms  
-- Preferred district (optional)  
-- Maximum budget  
+If the user chooses **continue**, the last entered value is returned.
 
-Also prints the application title using `pyfiglet`.
+If the user chooses **exit**, the program terminates.
+
+This function helps prevent infinite loops during input validation.
 
 ---
 
-## validate_location(country, city)
+### get_valid_country()
 
-Validates user input for supported locations.
+Prompts the user to enter a valid country.
 
-- Ensures country is `"kazakhstan"`.
-- Ensures city is `"almaty"`.
-- Exits the program if unsupported.
+Validation rules:
 
----
+Only letters are allowed.
 
-## parse_price(price_input)
+Maximum length is **10 characters**.
 
-Parses and validates the maximum budget input.
+Only **"kazakhstan"** is currently supported.
 
-- Converts input to integer.
-- Defaults to 500,000,000 if invalid or negative.
-- Prevents program failure due to incorrect input.
+The user has **up to three attempts** before being asked whether to continue or exit.
 
 ---
 
-## setup_google_sheets()
+### get_valid_city()
 
-Establishes connection to Google Sheets.
+Prompts the user to enter a valid city.
 
-- Authenticates using service account credentials.
-- Opens the spreadsheet `real_estate_analysis_app`.
-- Creates or opens a worksheet named with today's date.
-- Returns the worksheet object.
+Validation rules:
 
----
+Only letters are allowed.
 
-## scrape_data(rooms_input)
+Maximum length is **10 characters**.
 
-Scrapes apartment listings from krisha.kz.
+Only **"almaty"** is currently supported.
 
-- Launches Playwright.
-- Iterates pages up to `MAX_PAGES`.
-- Waits for listing cards to load.
-- Extracts:
-  - Header
-  - Price
-  - Location
-  - Link
-  - Combined text
-- Returns raw listing data as a list.
+Allows **three attempts** before triggering the attempt handler.
 
 ---
 
-## clean_data(all_data, rooms_input, location_input, max_price)
+### get_valid_rooms()
 
-Processes and analyzes scraped data.
+Prompts the user to enter the number of rooms.
 
-Performs:
+Validation rules:
 
-- DataFrame creation  
-- Duplicate removal  
-- Room extraction using regex  
-- Location filtering  
-- Price cleaning and numeric conversion  
-- Budget filtering  
-- Apartment size (sqm) extraction  
-- Price per m² calculation  
-- IQR outlier removal  
-- Z-score calculation  
-- Undervaluation scoring  
-- Liquidity scoring  
-- Center location scoring  
-- Final investment score calculation  
-- Sorting by investment score  
+Only numeric values are accepted.
 
-Returns a cleaned and ranked DataFrame.
+Valid range: **1–10 rooms**
+
+Empty input is not allowed.
+
+The user has **three attempts** before the program offers the option to continue or exit.
 
 ---
 
-## save_to_sheets(df, ws)
+### get_valid_location()
 
-Exports analyzed data to Google Sheets.
+Prompts the user to select a preferred location.
 
-- Clears worksheet  
-- Writes header row  
-- Uploads:
-  - Header  
-  - Price  
-  - Location  
-  - Link  
-  - sqm  
-  - price_per_m2  
-  - z_score  
-  - liquidity_score  
-  - center_score  
-  - investment_score  
+Accepted values:
 
----
+- center
 
-## print_results(df, ws)
+- outskirts
 
-Formats and displays results.
+Validation rules:
 
-In Google Sheets:
+Only letters allowed
 
-- Bolds header row  
-- Freezes header row  
-- Highlights top 3 investment listings  
+Maximum **10 characters**
 
-In terminal:
-
-- Prints market summary:
-  - Average price  
-  - Average size  
-  - Average price per m²  
-- Displays top 3 investment opportunities  
-- Confirms save to Google Sheets  
+Used later to filter listings by central or non-central districts.
 
 ---
 
-## main()
+### get_valid_price()
 
-Orchestrates the full application workflow.
+Prompts the user to enter a maximum budget.
+
+Rules:
+
+Only numeric values allowed
+
+Minimum price: **20,000,000 KZT**
+
+Maximum price: **500,000,000 KZT**
+
+If the user enters:
+
+a value **below the minimum**, the minimum is used
+
+a value **above the maximum**, the maximum is used
+
+This ensures the program always works with a valid budget range.
+
+---
+
+### get_user_input()
+
+Collects all user search parameters.
+
+Prompts the user for:
+
+Country
+
+City
+
+Number of rooms
+
+Preferred location
+
+Budget
+
+Also prints the application title using **pyfiglet** to display:
+
+```text
+Real Estate App
+```
+
+Returns the validated parameters for use in the scraping process.
+
+---
+
+### translate_text(text, target="en")
+
+Translates text into English using **GoogleTranslator**.
+
+Used to translate:
+
+- Apartment titles
+
+- Locations
+
+This improves readability of results when printing listings in the terminal.
+
+---
+
+### parse_price(price_input)
+
+Safely converts price input into an integer.
+
+If the value is:
+
+- non-numeric
+
+- negative
+
+- zero
+
+the function defaults to:
+
+```text
+500,000,000 KZT
+```
+
+This prevents the program from crashing due to invalid budget values.
+
+---
+
+### setup_google_sheets()
+
+Establishes a connection to **Google Sheets**.
+
+Steps performed:
+
+1. Authenticates using a **service account**
+
+2. Opens the spreadsheet:
+
+```
+real_estate_analysis_app
+```
+
+3. Creates or opens a worksheet named with **today's date**
+
+Example:
+
+```
+2026-03-09
+```
+
+Returns the worksheet object used to store results.
+
+---
+
+### scrape_data(rooms_input)
+
+Scrapes apartment listings from **krisha.kz** using **Playwright**.
+
+Process:
+
+- Launches a headless Chromium browser
+
+- Iterates through pages up to MAX_PAGES
+
+- Waits for listing cards to load
+
+- Extracts the following fields:
+
+- Header
+
+- Price
+
+- Location
+
+- Link
+
+- Combined listing text
+
+Returns a list of raw listing data.
+
+---
+
+### clean_data(all_data, rooms_input, location_input, max_price)
+
+Processes and analyzes scraped data using **Pandas**.
+
+Steps include:
+
+#### Data Preparation
+
+- Converts raw data into a **DataFrame**
+
+- Removes duplicate listings
+
+- Extracts the number of rooms using **regex**
+
+#### Filtering
+
+Filters by:
+
+- number of rooms
+
+- location preference
+
+- maximum budget
+
+#### Data Cleaning
+
+- Cleans price text
+
+- Converts prices to numeric format
+
+- Extracts apartment size (sqm)
+
+- Removes invalid or missing values
+
+#### Feature Engineering
+
+Calculates:
+
+- price_per_m2
+
+- z_score
+
+- undervaluation_score
+
+- liquidity_score
+
+- center_score
+
+#### Outlier Removal
+
+Uses the **IQR** method to remove unrealistic price per square meter values.
+
+#### Investment Scoring
+
+Computes a final **investment_score** using:
+
+```
+    investment_score =
+    undervaluation_score
+    + liquidity_score
+    + 3 * center_score
+```
+
+Listings are then **sorted by highest investment score**.
+
+Returns a cleaned and ranked **DataFrame**.
+
+---
+
+### save_to_sheets(df, ws)
+
+Exports processed data to **Google Sheets**.
 
 Steps:
 
-1. Collect user input  
-2. Validate location  
-3. Parse budget  
-4. Setup Google Sheets  
-5. Scrape listings  
-6. Clean and analyze data  
-7. Save results  
-8. Display summary  
+1. Clears the worksheet
 
-Acts as the central controller of the application.
+2. Writes the header row
+
+3. Uploads analyzed listing data
+
+Stored columns include:
+
+- header
+
+- price
+
+- location
+
+- link
+
+- sqm
+
+- price_per_m2
+
+- z_score
+
+- liquidity_score
+
+- center_score
+
+- investment_score
 
 ---
 
-## Program Entry Point
+### print_results(df, ws)
 
-```python
-if __name__ == "__main__":
-    main()
+Formats and displays results.
+
+#### Google Sheets formatting
+
+Header row is **bold**
+
+Header row is **frozen**
+
+Top **3 investment listings highlighted in green**
+
+#### Terminal output
+
+Displays:
+
+**Market summary**
+
+- Average price
+
+- Average apartment size
+
+- Average price per m²
+
+**Top investment opportunities**
+
+For each listing:
+
+- Apartment title
+
+- Location
+
+- Price
+
+- Size
+
+- Price per m²
+
+- Link
+
+Also confirms that results were saved to Google Sheets.
+
+---
+
+### main()
+
+Controls the full application workflow.
+
+Steps executed:
+
+1. Installs Playwright browser dependencies
+
+2. Collects user input
+
+3. Parses price input
+
+4. Connects to Google Sheets
+
+5. Scrapes apartment listings
+
+6. Cleans and analyzes data
+
+7. Saves results to Google Sheets
+
+8. Displays investment insights
+
+Acts as the **central controller of the application**.
+
+### Program Entry Point
+
+The script runs inside a loop so the user can repeat the analysis.
+
+```
+  if __name__ == "__main__":
+    while True:
+        main()
 ```
 
-# Imports
+After execution, the user can choose to:
 
-The following Python packages and external libraries were used in this project:
-
----
-
-## Core Dependencies
-
-### gspread
-Used to interact with Google Sheets.  
-Allows reading from and writing to spreadsheets, effectively serving as a lightweight cloud database.
-
-### google.oauth2.service_account
-Handles secure authentication with the Google Sheets API using a service account.
-
-### playwright
-Provides browser automation capabilities for scraping real estate listings.
-
-### pandas
-Used for data manipulation and analysis.  
-Transforms raw scraped data into structured DataFrames for processing.
-
-### numpy
-Provides numerical operations required for statistical calculations such as z-scores and investment metrics.
-
-### gspread-formatting
-Enables formatting of Google Sheets output (bold headers, frozen rows, highlighted cells).
-
-### pyfiglet
-Generates ASCII-art text for the application title displayed at startup.
+```
+  Run the program again (y)
+  Exit the program (n)
+```
 
 ---
 
-## Standard Library
+## Imports
 
-### datetime
-Used to generate the current date for automatic worksheet naming.
+The following libraries are used in the project.
+
+### Core Dependencies
+
+#### playwright
+
+Provides browser automation used to scrape apartment listings from **krisha.kz**.
+
+#### pandas
+
+Handles structured data processing, filtering, and transformation of scraped listings.
+
+#### numpy
+
+Provides numerical operations used for statistical calculations such as **z-scores** and investment metrics.
+
+#### gspread
+
+Used to interact with **Google Sheets**, allowing the program to upload results to a spreadsheet.
+
+#### google.oauth2.service_account
+
+Handles authentication with the **Google Sheets API** using a service account.
+
+#### gspread-formatting
+
+Allows formatting of Google Sheets output such as:
+
+- bold headers
+
+- frozen rows
+
+- highlighted investment opportunities
+
+#### deep-translator
+
+Used to translate listing titles and locations into English for improved readability.
+
+#### pyfiglet
+
+Generates ASCII-art text for displaying the application title in the terminal.
 
 ---
 
+### Standard Library
+
+#### subprocess
+
+Used to install Playwright browser dependencies automatically before running the scraper.
+
+#### datetime
+
+Generates the current date used to create a new worksheet for each analysis run.
+
+---
 
 ## Why These Libraries Were Chosen
 
-- **Playwright** enables interaction with dynamic websites where traditional HTTP requests are insufficient, allowing JavaScript-rendered content to be scraped reliably. It was also chosen because it works well in cloud environments such as Heroku, where headless browsers are required.
+**Playwright** enables reliable scraping of dynamic websites that load content using JavaScript.
 
-- **Pandas & NumPy** provide powerful data manipulation and statistical analysis tools used for cleaning listings, calculating price per square meter, removing outliers, and generating investment scores.
+**Pandas & NumPy** provide powerful data manipulation and statistical tools required to clean listings, compute price metrics, remove outliers, and generate investment scores.
 
-- **Google Sheets API** (via gspread) acts as lightweight cloud storage, eliminating the need for a traditional database while allowing results to be easily viewed and shared.
+**Google Sheets API (gspread)** serves as lightweight cloud storage, allowing results to be easily viewed, shared, and updated without requiring a database.
 
-- **gspread-formatting** improves readability by formatting headers, freezing rows, and highlighting the most attractive investment opportunities.
+**gspread-formatting** improves presentation by formatting headers and highlighting top investment opportunities.
+
+**Deep Translator** makes listing information readable by translating Russian text into English.
 
 Together, these tools create a complete pipeline:
 
-**Web scraping → Data cleaning → Statistical analysis → Investment ranking → Cloud storage → Presentation**
-
+Web Scraping
+      ↓
+Data Cleaning
+      ↓
+Statistical Analysis
+      ↓
+Investment Ranking
+      ↓
+Cloud Storage (Google Sheets)
+      ↓
+Result Presentation
 
 
 
@@ -881,16 +1107,13 @@ Defensive programming and application stability were manually tested using the f
 
 | Feature | Expectation | Test | Result |
 |--------|-------------|------|--------|
-| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* <img width="300" src="https://github.com/user-attachments/assets/b08a9c59-44ec-4872-8de6-385f5908cae8">|
-| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* <img width="300" src="https://github.com/user-attachments/assets/563786d5-ce7d-452a-be80-fade1e33daf6">|
-| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | Program assigns default max price of **500,000,000 ₸** <img width="300" src="https://github.com/user-attachments/assets/ec121045-a767-428c-a910-8e0f778cf162">|
-| Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | Program runs normally and returns **"No listings found."** <img width="300" src="https://github.com/user-attachments/assets/454e31d1-4201-4934-89a2-5b42b4ce7ea5">|
-| Slow page loading | Scraper should not crash when pages load slowly | Simulate slow page loading | Timeout protection stops scraping safely |
-| Page loading optimisation | Scraper should load pages efficiently | Load page using `domcontentloaded` | Pages load faster and scraper continues |
-| Scraper stability | Program should not crash if a page fails to load | Trigger a page timeout | Program prints **"Page failed to load, stopping scraper."** |
-| Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."** <img width="300" src="https://github.com/user-attachments/assets/454e31d1-4201-4934-89a2-5b42b4ce7ea5">|
+| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."*  <br> <img width="400" src="https://github.com/user-attachments/assets/4791a1f8-0c53-4acf-8b04-d59844853482">|
+| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* <br>  <img width="400" src="https://github.com/user-attachments/assets/0401b60a-2095-4b3a-814f-fecb4c086182">|
+| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | The program asks you to enter numbers. <br>  <img width="400" src="https://github.com/user-attachments/assets/ece018b6-43fe-45e0-9bbd-5ba5183c9502">|
+| Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | The program runs normally but sets the minimum value by default. <br>  <img width="400" src="https://github.com/user-attachments/assets/e7d55c26-92df-4a03-8436-7675584b5888">|
+| Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."**  <br>  <img width="400" src="https://github.com/user-attachments/assets/c1eb2540-405e-4d18-95b5-21196cc9227b">|
 | Duplicate listings | Listings should not appear multiple times | Scrape multiple pages | Duplicate entries removed using `drop_duplicates()` |
-| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets <img width="300" src="https://github.com/user-attachments/assets/e557e56a-b11b-48d0-9b49-6f6e314cf738">|
+| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets <br>  <img width="400" src="https://github.com/user-attachments/assets/a6780bb0-643a-4d06-a1c5-2b478ce61d4f">|
 
 ---
 
@@ -900,11 +1123,11 @@ After successful scraping and analysis, the program prints a **market summary an
 
 Example console output:
 
-<img width="900" src="https://github.com/user-attachments/assets/e7fc7dd3-170d-4f4b-9f83-035a22f1a080">
+<img width="900" src="https://github.com/user-attachments/assets/d1c70a52-6461-4745-8de3-b3e93f9b55e0">
 
 ---
 
-<img width="900" src="https://github.com/user-attachments/assets/8e05657e-5926-4bcb-9e0a-7392e2a9e7ae">
+<img width="900" src="https://github.com/user-attachments/assets/ad655150-856d-45e2-b2a7-ec069d02e99f">
 
 
 ---
