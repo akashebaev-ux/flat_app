@@ -400,7 +400,6 @@ Enter your budget (20000000 - 500000000):
 ```
 ---
 
-
 ## 5. Surface
 **Visual Design**
 
@@ -466,11 +465,8 @@ The Real Estate Analysis App is organized into modular functions responsible for
 ### handle_attempts(attempts, last_value)
 
 Handles behavior after multiple invalid input attempts.
-
 If the user reaches **3 incorrect attempts**, they are asked whether to continue or exit.
-
 If the user chooses **continue**, the last entered value is returned.
-
 If the user chooses **exit**, the program terminates.
 
 This function helps prevent infinite loops during input validation.
@@ -484,11 +480,8 @@ Prompts the user to enter a valid country.
 Validation rules:
 
 Only letters are allowed.
-
 Maximum length is **10 characters**.
-
 Only **"kazakhstan"** is currently supported.
-
 The user has **up to three attempts** before being asked whether to continue or exit.
 
 ---
@@ -500,11 +493,8 @@ Prompts the user to enter a valid city.
 Validation rules:
 
 Only letters are allowed.
-
 Maximum length is **10 characters**.
-
 Only **"almaty"** is currently supported.
-
 Allows **three attempts** before triggering the attempt handler.
 
 ---
@@ -516,9 +506,7 @@ Prompts the user to enter the number of rooms.
 Validation rules:
 
 Only numeric values are accepted.
-
 Valid range: **1–10 rooms**
-
 Empty input is not allowed.
 
 The user has **three attempts** before the program offers the option to continue or exit.
@@ -537,7 +525,6 @@ Accepted values:
 Validation rules:
 
 Only letters allowed
-
 Maximum **10 characters**
 
 Used later to filter listings by central or non-central districts.
@@ -551,15 +538,12 @@ Prompts the user to enter a maximum budget.
 Rules:
 
 Only numeric values allowed
-
 Minimum price: **20,000,000 KZT**
-
 Maximum price: **500,000,000 KZT**
 
 If the user enters:
 
 a value **below the minimum**, the minimum is used
-
 a value **above the maximum**, the maximum is used
 
 This ensures the program always works with a valid budget range.
@@ -573,13 +557,9 @@ Collects all user search parameters.
 Prompts the user for:
 
 Country
-
 City
-
 Number of rooms
-
 Preferred location
-
 Budget
 
 Also prints the application title using **pyfiglet** to display:
@@ -658,21 +638,13 @@ Scrapes apartment listings from **krisha.kz** using **Playwright**.
 Process:
 
 - Launches a headless Chromium browser
-
 - Iterates through pages up to MAX_PAGES
-
 - Waits for listing cards to load
-
 - Extracts the following fields:
-
 - Header
-
 - Price
-
 - Location
-
 - Link
-
 - Combined listing text
 
 Returns a list of raw listing data.
@@ -688,9 +660,7 @@ Steps include:
 #### Data Preparation
 
 - Converts raw data into a **DataFrame**
-
 - Removes duplicate listings
-
 - Extracts the number of rooms using **regex**
 
 #### Filtering
@@ -698,19 +668,14 @@ Steps include:
 Filters by:
 
 - number of rooms
-
 - location preference
-
 - maximum budget
 
 #### Data Cleaning
 
 - Cleans price text
-
 - Converts prices to numeric format
-
 - Extracts apartment size (sqm)
-
 - Removes invalid or missing values
 
 #### Feature Engineering
@@ -718,13 +683,9 @@ Filters by:
 Calculates:
 
 - price_per_m2
-
 - z_score
-
 - undervaluation_score
-
 - liquidity_score
-
 - center_score
 
 #### Outlier Removal
@@ -780,7 +741,6 @@ Formats and displays results.
 #### Google Sheets formatting
 
 Header row is **bold**
-
 Header row is **frozen**
 
 Top **3 investment listings highlighted in green**
@@ -1040,8 +1000,7 @@ The initial validation revealed several errors, which are shown below.
 <img width="900" alt="PEP8 end" src="https://github.com/user-attachments/assets/5144b68a-9ffe-42a7-b8ed-b73af7b87145">
 
 
-The validation process identified the following errors, which were then corrected. More information about the bug fixes is available at the link below.
-
+The validation process identified the following errors, which were then corrected. More information about the bug fixes and validation is available at the link: [TESTING.md](https://github.com/akashebaev-ux/real_estate_analysis_app/blob/main/TESTING.md).
 
 
 ---
@@ -1203,9 +1162,7 @@ For security reasons, this file is not included in the repository.
 To run the project locally:
 
 - Create a **Google Cloud Project**.
-
 - Enable the **Google Sheets API**.
-
 - Create a **Service Account**.
 
 Download the credentials file and rename it to:
