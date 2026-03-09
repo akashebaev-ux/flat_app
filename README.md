@@ -1107,13 +1107,13 @@ Defensive programming and application stability were manually tested using the f
 
 | Feature | Expectation | Test | Result |
 |--------|-------------|------|--------|
-| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."* <img width="300" src="https://github.com/user-attachments/assets/4791a1f8-0c53-4acf-8b04-d59844853482">|
-| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* <img width="300" src="https://github.com/user-attachments/assets/0401b60a-2095-4b3a-814f-fecb4c086182">|
-| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | The program asks you to enter numbers. <img width="300" src="https://github.com/user-attachments/assets/ece018b6-43fe-45e0-9bbd-5ba5183c9502">|
-| Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | The program runs normally but sets the minimum value by default. <img width="300" src="https://github.com/user-attachments/assets/e7d55c26-92df-4a03-8436-7675584b5888">|
-| Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."** <img width="300" src="https://github.com/user-attachments/assets/c1eb2540-405e-4d18-95b5-21196cc9227b">|
+| Country validation | The application should only support Kazakhstan | Enter `USA` as country | Program displays message: *"Currently only Kazakhstan supported."*  <br> <img width="400" src="https://github.com/user-attachments/assets/4791a1f8-0c53-4acf-8b04-d59844853482">|
+| City validation | The application should only support Almaty | Enter `Astana` as city | Program displays message: *"Currently only Almaty supported."* <br>  <img width="400" src="https://github.com/user-attachments/assets/0401b60a-2095-4b3a-814f-fecb4c086182">|
+| Price validation | The program should handle invalid price input | Enter a non-numeric value such as `abc` | The program asks you to enter numbers. <br>  <img width="400" src="https://github.com/user-attachments/assets/ece018b6-43fe-45e0-9bbd-5ba5183c9502">|
+| Unrealistic budget | The program should not crash when a very low budget is entered | Enter `6000` as budget | The program runs normally but sets the minimum value by default. <br>  <img width="400" src="https://github.com/user-attachments/assets/e7d55c26-92df-4a03-8436-7675584b5888">|
+| Missing listings | Program should handle empty datasets safely | Scrape with strict filters | Program prints **"No listings found."**  <br>  <img width="400" src="https://github.com/user-attachments/assets/c1eb2540-405e-4d18-95b5-21196cc9227b">|
 | Duplicate listings | Listings should not appear multiple times | Scrape multiple pages | Duplicate entries removed using `drop_duplicates()` |
-| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets <img width="300" src="https://github.com/user-attachments/assets/a6780bb0-643a-4d06-a1c5-2b478ce61d4f">|
+| Google Sheets export | Results should be stored correctly | Run full scraping process | Listings successfully saved to Google Sheets <br>  <img width="400" src="https://github.com/user-attachments/assets/a6780bb0-643a-4d06-a1c5-2b478ce61d4f">|
 
 ---
 
