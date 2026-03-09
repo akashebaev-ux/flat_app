@@ -19,6 +19,9 @@ Developer: [Azamat Kashebayev](https://github.com/akashebaev-ux)
 ╚═╝  ╚═╝╚═╝     ╚═╝    
 ```
 
+The link to the [Real Estate Investment Analysis App](https://real-estate-app-2026-9178939f4b7b.herokuapp.com/)
+The link to the [Google spreadsheet](https://docs.google.com/spreadsheets/d/1LsCn1ZCsya1gHUvBHxhPOWLg6muRCamR4Mk9WYVjDYM) 
+
 # Overview
 
 # Real Estate Investment Analysis App
@@ -105,12 +108,13 @@ The application includes references and links to the original data sources. If r
 
 ---
 
-## Features
+## Features 
+*(overview) 
 
 - Scrapes apartment listings from **Krisha.kz**
 - Filters listings by **number of rooms**
-- Optional filtering by **location or district**
-- Filters properties by **maximum budget**
+- Optional filtering by **location**
+- Filters properties by **budget**
 - Calculates **price per square meter**
 - Removes unrealistic listings using **statistical filtering**
 - Detects **undervalued properties**
@@ -120,7 +124,8 @@ The application includes references and links to the original data sources. If r
 
 ---
 
-## Project Workflow
+## Project Workflow 
+*(overview)
 
 1. User enters search criteria:
    - Country
@@ -400,7 +405,7 @@ Exports results
 
 ## Flowchart
 
-<img width="600" src="https://github.com/user-attachments/assets/b86b9db2-bacd-4be1-9c28-5d736df7c617">
+<img width="600" src="https://github.com/user-attachments/assets/0e97fdaf-da2c-44ad-97bc-6afc4c6792f5">
 
 
 
@@ -1094,11 +1099,14 @@ The initial validation revealed several errors, which are shown below.
 <img width="900" alt="PEP8 end" src="https://github.com/user-attachments/assets/5144b68a-9ffe-42a7-b8ed-b73af7b87145">
 
 
-The validation process identified the following errors, which were then corrected:
+The validation process identified the following errors, which were then corrected. More information about the bug fixes is available at the link below.
+
+
 
 ---
 
-<img width="900" alt="PEP8 clean" src="https://github.com/user-attachments/assets/3736527a-d7f8-4ce2-92e6-eda3b38007ca">
+<img width="900" alt="PEP8+" src="https://github.com/user-attachments/assets/4b5e0216-fba7-40e9-a4dd-a22b530bd275">
+
 
 
 ## Manual Testing Documentation
