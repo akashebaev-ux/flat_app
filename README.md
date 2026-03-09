@@ -168,28 +168,19 @@ Please be patient. The program may take **1–3 minutes** to process all calcula
 You will be asked to enter:
 
 - Country
-
 - City
-
 - Number of rooms (1-10)
-  
 - Preferred location (center or outskirts)
-
 - Budget
 
 
 The program will:
 
 1. Connect to Google Sheets
-
 2. Scrape apartment listings
-
 3. Analyze market data
-
 4. Rank investment opportunities
-
 5. Translate the three best investment opportunities into English.
-
 6. Export results
   
    **Note:** Please wait while the system calculates the parameters.
@@ -204,17 +195,11 @@ The program will:
 A command-line real estate analysis tool that:
 
 - Collects apartment search parameters
-
 - Scrapes listings automatically
-
 - Cleans and filters data
-
 - Calculates investment metrics
-
 - Identifies undervalued apartments
-
 - Translates the three best investment opportunities into English.
-
 - Saves results to Google Sheets
 
 
@@ -229,19 +214,14 @@ Provide automated real estate market analysis.
 **Primary User Needs**
 
 - Find affordable apartments
-
 - Compare prices
-
 - Identify investments
-
 - Analyze market trends
 
 **Business Goals**
 
 - Provide reliable analysis
-
 - Automate real estate research
-
 - Save time searching listings
 
 ## 2. Scope
@@ -249,13 +229,9 @@ Provide automated real estate market analysis.
 **Features**
 
 - Real estate web scraping
-
 - Data cleaning
-
 - Price analysis
-
 - Investment scoring
-
 - Google Sheets export
 
 **Content Requirements**
@@ -287,9 +263,7 @@ Input Content:
 Ensures:
 
 - Country supported
-
 - City supported
-
 - Budget numeric
 
 **Web Scraper**
@@ -435,13 +409,9 @@ Minimal terminal-based interface.
 Features:
 
 - Clean text layout
-
 - Clear prompts
-
 - Structured output
-
 - Market summary section
-
 - Top investment section
 
 # User Stories
@@ -562,7 +532,6 @@ Prompts the user to select a preferred location.
 Accepted values:
 
 - center
-
 - outskirts
 
 Validation rules:
@@ -630,7 +599,6 @@ Translates text into English using **GoogleTranslator**.
 Used to translate:
 
 - Apartment titles
-
 - Locations
 
 This improves readability of results when printing listings in the terminal.
@@ -644,9 +612,7 @@ Safely converts price input into an integer.
 If the value is:
 
 - non-numeric
-
 - negative
-
 - zero
 
 the function defaults to:
@@ -789,31 +755,20 @@ Exports processed data to **Google Sheets**.
 Steps:
 
 1. Clears the worksheet
-
 2. Writes the header row
-
 3. Uploads analyzed listing data
 
 Stored columns include:
 
 - header
-
 - price
-
 - location
-
 - link
-
 - sqm
-
 - price_per_m2
-
 - z_score
-
 - liquidity_score
-
 - center_score
-
 - investment_score
 
 ---
@@ -837,9 +792,7 @@ Displays:
 **Market summary**
 
 - Average price
-
 - Average apartment size
-
 - Average price per m²
 
 **Top investment opportunities**
@@ -847,15 +800,10 @@ Displays:
 For each listing:
 
 - Apartment title
-
 - Location
-
 - Price
-
 - Size
-
 - Price per m²
-
 - Link
 
 Also confirms that results were saved to Google Sheets.
@@ -869,19 +817,12 @@ Controls the full application workflow.
 Steps executed:
 
 1. Installs Playwright browser dependencies
-
 2. Collects user input
-
 3. Parses price input
-
 4. Connects to Google Sheets
-
 5. Scrapes apartment listings
-
 6. Cleans and analyzes data
-
 7. Saves results to Google Sheets
-
 8. Displays investment insights
 
 Acts as the **central controller of the application**.
@@ -1633,9 +1574,7 @@ The local version of the application allows developers to test features and expe
 The deployed version is hosted online and may include:
 
 - Production configuration settings
-
 - Environment variables
-
 - Performance optimizations
 
 While both versions should behave similarly, small differences may occur depending on the deployment environment or hosting platform.
