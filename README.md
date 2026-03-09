@@ -1596,4 +1596,6 @@ AI assistance was used **as a learning support tool**, and all code written in t
 
 # Acknowledgements
 
-I would like to express my sincere gratitude to **Mrs. Julia Konovalova**, an excellent mentor and teacher. Her professionalism and dedication are truly world-class. Her guidance and pivotal remarks provided valuable direction and made a significant difference in improving the quality of my work.
+I would like to express my sincere gratitude to **Mrs. Julia Konovalova**, an excellent mentor and teacher. Her professionalism and dedication are truly world-class. Her guidance and pivotal remarks provided valuable direction and made a significant difference in improving the quality of my project.
+
+**Ms. Tindy Chan** — Facilitator at Code Institute helped me review the README file and provided valuable advice.
